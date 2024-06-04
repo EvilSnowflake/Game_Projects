@@ -1,0 +1,111 @@
+[gd_scene load_steps=11 format=3 uid="uid://c65rdm1nee4ik"]
+
+[ext_resource type="PackedScene" uid="uid://man43r7wt12j" path="res://scenes/player.tscn" id="2_wp62r"]
+[ext_resource type="Texture2D" uid="uid://cnoh0yvhjl0lv" path="res://assets/Road_Sheet.png" id="2_y3rde"]
+[ext_resource type="Script" path="res://scripts/TiresSpawner.gd" id="3_aj8tw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tferh"]
+atlas = ExtResource("2_y3rde")
+region = Rect2(0, 0, 100, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cm6f7"]
+atlas = ExtResource("2_y3rde")
+region = Rect2(100, 0, 100, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7q7y"]
+atlas = ExtResource("2_y3rde")
+region = Rect2(200, 0, 100, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27byw"]
+atlas = ExtResource("2_y3rde")
+region = Rect2(300, 0, 100, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2xeh"]
+atlas = ExtResource("2_y3rde")
+region = Rect2(400, 0, 100, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6arfq"]
+atlas = ExtResource("2_y3rde")
+region = Rect2(500, 0, 100, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mvveb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tferh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cm6f7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7q7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27byw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2xeh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6arfq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="game" type="Node2D"]
+
+[node name="TiresSpawner" type="Node" parent="."]
+script = ExtResource("3_aj8tw")
+
+[node name="Timer" type="Timer" parent="TiresSpawner"]
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mvveb")
+frame = 3
+frame_progress = 0.704874
+
+[node name="player" parent="." instance=ExtResource("2_wp62r")]
+position = Vector2(2, 20)
+
+[node name="playerRoad" type="Node" parent="."]
+
+[node name="Road1" type="Node2D" parent="playerRoad"]
+position = Vector2(-33, 23)
+
+[node name="Road2" type="Node2D" parent="playerRoad"]
+position = Vector2(-20, 23)
+
+[node name="Road3" type="Node2D" parent="playerRoad"]
+position = Vector2(-8, 23)
+
+[node name="Road4" type="Node2D" parent="playerRoad"]
+position = Vector2(2, 23)
+
+[node name="Road5" type="Node2D" parent="playerRoad"]
+position = Vector2(13, 23)
+
+[node name="Road6" type="Node2D" parent="playerRoad"]
+position = Vector2(25, 23)
+
+[node name="Road7" type="Node2D" parent="playerRoad"]
+position = Vector2(38, 23)
+
+[node name="enemiesRoad" type="Node" parent="."]
+
+[node name="Road1" type="Node2D" parent="enemiesRoad"]
+position = Vector2(-21, -41)
+
+[node name="Road2" type="Node2D" parent="enemiesRoad"]
+position = Vector2(1, -41)
+
+[node name="Road3" type="Node2D" parent="enemiesRoad"]
+position = Vector2(23, -41)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[connection signal="timeout" from="TiresSpawner/Timer" to="TiresSpawner" method="_on_timer_timeout"]
+[connection signal="timeout" from="TiresSpawner/Timer" to="player" method="_on_timer_timeout"]

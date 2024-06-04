@@ -1,8 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://cnmkdsnmx252c"]
+[gd_scene load_steps=21 format=3 uid="uid://cnmkdsnmx252c"]
 
 [ext_resource type="Texture2D" uid="uid://l2chj1ffa4k3" path="res://Assets/sprites/Dragon_Idle_Sheet.png" id="1_0id43"]
+[ext_resource type="Texture2D" uid="uid://c3shvygng75wj" path="res://Assets/sprites/DragonHover.png" id="1_8rym7"]
 [ext_resource type="Texture2D" uid="uid://c7cly6t8b7rir" path="res://Assets/sprites/Dragon_Midair.png" id="2_4ierb"]
 [ext_resource type="Texture2D" uid="uid://dgubmqlpvqw0r" path="res://Assets/sprites/Dragon_Run_Spritesheet.png" id="3_bkxky"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r632o"]
+atlas = ExtResource("1_8rym7")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_83tg5"]
 atlas = ExtResource("1_0id43")
@@ -58,6 +63,14 @@ region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6ymg"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r632o")
+}],
+"loop": true,
+"name": &"hover",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_83tg5")

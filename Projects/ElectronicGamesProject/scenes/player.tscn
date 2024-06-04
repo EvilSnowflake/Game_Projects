@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://cigqhyb5fycuh"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_0vfmp"]
+[ext_resource type="Texture2D" uid="uid://dfg5tfstk3qc5" path="res://assets/Player.png" id="1_cfqq0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktafm"]
+atlas = ExtResource("1_cfqq0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t602l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktafm")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ll4vw"]
+radius = 6.08276
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 5
+script = ExtResource("1_0vfmp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -8)
+sprite_frames = SubResource("SpriteFrames_t602l")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_ll4vw")
+
+[node name="FloatTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="FloatTimer" to="." method="_on_float_timer_timeout"]

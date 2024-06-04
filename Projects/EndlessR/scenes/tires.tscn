@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5bo3ubc6pb7q"]
+
+[ext_resource type="Script" path="res://scripts/tires.gd" id="1_176al"]
+[ext_resource type="Texture2D" uid="uid://igkxi02n4e2p" path="res://assets/Ball.png" id="1_xh2un"]
+[ext_resource type="PackedScene" uid="uid://d21s2mcvpfc8k" path="res://scenes/killzone.tscn" id="3_yj5qs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlxvq"]
+atlas = ExtResource("1_xh2un")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3isdx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlxvq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7jm8b"]
+radius = 8.0
+
+[node name="tires" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_176al")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3isdx")
+
+[node name="killzone" parent="AnimatedSprite2D" instance=ExtResource("3_yj5qs")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/killzone"]
+position = Vector2(2, 2)
+shape = SubResource("CircleShape2D_7jm8b")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.744
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
