@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cw5g71jv31lkh"]
+
+[ext_resource type="FontFile" uid="uid://c6wlxxiskjcdn" path="res://assets/fonts/PixelOperator8.ttf" id="1_r5xgi"]
+[ext_resource type="FontFile" uid="uid://bre710w6bpy5p" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_w7su4"]
+
+[resource]
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 5
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_r5xgi")
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0.647059, 0, 0.635294, 1)
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_w7su4")

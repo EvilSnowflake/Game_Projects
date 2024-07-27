@@ -1,41 +1,112 @@
-[gd_scene load_steps=6 format=3 uid="uid://cigqhyb5fycuh"]
+[gd_scene load_steps=7 format=3 uid="uid://cigqhyb5fycuh"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_0vfmp"]
-[ext_resource type="Texture2D" uid="uid://dfg5tfstk3qc5" path="res://assets/Player.png" id="1_cfqq0"]
+[ext_resource type="Texture2D" uid="uid://cwsca6gdne6ij" path="res://scenes/ElectronicGames_Player.png" id="2_h3r8b"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ktafm"]
-atlas = ExtResource("1_cfqq0")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="Animation" id="Animation_kd0r8"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_t602l"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ktafm")
-}],
-"loop": true,
-"name": &"Idle",
-"speed": 5.0
-}]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yganf"]
+_data = {
+"Idle": SubResource("Animation_kd0r8")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ll4vw"]
-radius = 6.08276
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3c87o"]
+radius = 176.698
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
+scale = Vector2(0.4, 0.4)
 script = ExtResource("1_0vfmp")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -8)
-sprite_frames = SubResource("SpriteFrames_t602l")
-animation = &"Idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -6)
-shape = SubResource("CircleShape2D_ll4vw")
+[node name="TickTimer" type="Timer" parent="."]
 
 [node name="FloatTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="DieTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_yganf")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-3.33333, -50)
+texture = ExtResource("2_h3r8b")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://assets/asepritefiles/ElectronicGames_Player.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": true,
+"output_section": true,
+"slice_section": true
+}
+metadata/_aseprite_wizard_source_file_hash_ = "ce1721420777445aa2fd5049c18444a2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -30)
+shape = SubResource("CircleShape2D_ll4vw")
+
+[node name="GrabArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+position = Vector2(0, -26.6667)
+shape = SubResource("CircleShape2D_3c87o")
+
+[connection signal="timeout" from="TickTimer" to="." method="_on_tick_timer_timeout"]
 [connection signal="timeout" from="FloatTimer" to="." method="_on_float_timer_timeout"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
