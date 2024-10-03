@@ -1,0 +1,191 @@
+[gd_scene load_steps=8 format=3 uid="uid://bv2uqp01l1qbi"]
+
+[ext_resource type="Script" path="res://scripts/menu_screen.gd" id="1_tejro"]
+[ext_resource type="Texture2D" uid="uid://cdu8fh8kvdj02" path="res://assets/CityBackground/1 Backgrounds/1/Day/1.png" id="1_wxxc3"]
+[ext_resource type="Texture2D" uid="uid://5rlbkjide3bj" path="res://assets/CityBackground/1 Backgrounds/1/Day/2.png" id="2_yh2yd"]
+[ext_resource type="Texture2D" uid="uid://bavasnwyl2t3c" path="res://assets/CityBackground/1 Backgrounds/1/Day/3.png" id="3_avrd5"]
+[ext_resource type="Texture2D" uid="uid://b02hf6odf3740" path="res://assets/CityBackground/1 Backgrounds/1/Day/4.png" id="4_h8pmw"]
+[ext_resource type="Texture2D" uid="uid://c31uatjch3gg1" path="res://assets/CityBackground/1 Backgrounds/1/Day/5.png" id="5_jkl2y"]
+[ext_resource type="Theme" uid="uid://dgwn8knwt1m3r" path="res://assets/Themes/main_theme.tres" id="6_6ogre"]
+
+[node name="MenuScreen" type="Control" node_paths=PackedStringArray("stage_buttons")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tejro")
+stage_buttons = [NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages/Stage_Button_1"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages/Stage_Button_2"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages/Stage_Button_3"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages/Stage_Button_4"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages/Stage_Button_5"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2/Stage_Button_6"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2/Stage_Button_7"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2/Stage_Button_8"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2/Stage_Button_9"), NodePath("MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2/Stage_Button_10")]
+
+[node name="Background" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+modulate = Color(0.620121, 0.966497, 1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_wxxc3")
+
+[node name="TextureRect2" type="TextureRect" parent="Background"]
+modulate = Color(1, 0.525908, 0.460418, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_yh2yd")
+
+[node name="TextureRect3" type="TextureRect" parent="Background"]
+modulate = Color(0.984426, 0.183821, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_avrd5")
+
+[node name="TextureRect4" type="TextureRect" parent="Background"]
+modulate = Color(0.796078, 0, 0.0509804, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_h8pmw")
+
+[node name="TextureRect5" type="TextureRect" parent="Background"]
+modulate = Color(0.815686, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_jkl2y")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 256
+alignment = 1
+
+[node name="TitleItems" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Options" type="Button" parent="MarginContainer/HBoxContainer/TitleItems"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "OPTIONS"
+
+[node name="Exit" type="Button" parent="MarginContainer/HBoxContainer/TitleItems"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "EXIT"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Seperator" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Stages" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Stage_Button_1" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "1"
+icon_alignment = 1
+
+[node name="Stage_Button_2" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "2"
+
+[node name="Stage_Button_3" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "3"
+
+[node name="Stage_Button_4" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "4"
+
+[node name="Stage_Button_5" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "5"
+
+[node name="Stages2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Stage_Button_6" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "6"
+
+[node name="Stage_Button_7" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "7"
+
+[node name="Stage_Button_8" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "8"
+
+[node name="Stage_Button_9" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "9"
+
+[node name="Stage_Button_10" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "10"
