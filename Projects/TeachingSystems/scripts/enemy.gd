@@ -2,15 +2,15 @@ extends CharacterBody2D
 
 @onready var game
 @onready var player = $"../Player"
-
-
 @onready var drone_player = $Drone_Player
 
 @export var _speed: int = 50
-@export var _health: int = 3
+@export var _health: int = 4
 @export var receives_knockback: bool = true
 #const _PUSH_FORCE: int = 15.0
 #const _MIN_PUSH_FORCE: int = 10.0
+
+const ITEM_PICKUP = preload("res://scenes/item_pickup.tscn")
 
 func _physics_process(_delta):
 	if(_health > 0 and player != null):
@@ -36,6 +36,10 @@ func take_damage(amount: int):
 		if(game.has_method("decrease_enemy_number_by_one")):
 			game.decrease_enemy_number_by_one()
 		drone_player.play("Death")
+		var drop_down = ITEM_PICKUP.instantiate()
+		game.call_deferred("add_child",drop_down)
+		#get_parent().add_child(drop_down)
+		drop_down.global_position = global_position
 	else:
 		drone_player.queue("Float")
 

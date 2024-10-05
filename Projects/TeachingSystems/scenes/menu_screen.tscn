@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bv2uqp01l1qbi"]
+[gd_scene load_steps=9 format=3 uid="uid://bv2uqp01l1qbi"]
 
 [ext_resource type="Script" path="res://scripts/menu_screen.gd" id="1_tejro"]
 [ext_resource type="Texture2D" uid="uid://cdu8fh8kvdj02" path="res://assets/CityBackground/1 Backgrounds/1/Day/1.png" id="1_wxxc3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b02hf6odf3740" path="res://assets/CityBackground/1 Backgrounds/1/Day/4.png" id="4_h8pmw"]
 [ext_resource type="Texture2D" uid="uid://c31uatjch3gg1" path="res://assets/CityBackground/1 Backgrounds/1/Day/5.png" id="5_jkl2y"]
 [ext_resource type="Theme" uid="uid://dgwn8knwt1m3r" path="res://assets/Themes/main_theme.tres" id="6_6ogre"]
+[ext_resource type="PackedScene" uid="uid://vo06pvm6giba" path="res://scenes/controls.tscn" id="8_5dsp7"]
 
 [node name="MenuScreen" type="Control" node_paths=PackedStringArray("stage_buttons")]
 layout_mode = 3
@@ -98,15 +99,20 @@ layout_mode = 2
 theme_override_constants/separation = 48
 alignment = 1
 
-[node name="Options" type="Button" parent="MarginContainer/HBoxContainer/TitleItems"]
+[node name="Controls_Button" type="Button" parent="MarginContainer/HBoxContainer/TitleItems"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
-text = "OPTIONS"
+text = "CONTROLS"
 
 [node name="Exit" type="Button" parent="MarginContainer/HBoxContainer/TitleItems"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 text = "EXIT"
+
+[node name="Clear_Data" type="Button" parent="MarginContainer/HBoxContainer/TitleItems"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "CLEAR DATA"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -143,21 +149,25 @@ icon_alignment = 1
 [node name="Stage_Button_2" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "2"
 
 [node name="Stage_Button_3" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "3"
 
 [node name="Stage_Button_4" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "4"
 
 [node name="Stage_Button_5" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "5"
 
 [node name="Stages2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
@@ -168,24 +178,38 @@ alignment = 1
 [node name="Stage_Button_6" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "6"
 
 [node name="Stage_Button_7" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "7"
 
 [node name="Stage_Button_8" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "8"
 
 [node name="Stage_Button_9" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "9"
 
 [node name="Stage_Button_10" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
 layout_mode = 2
 theme = ExtResource("6_6ogre")
+disabled = true
 text = "10"
+
+[node name="Controls" parent="." instance=ExtResource("8_5dsp7")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/Controls_Button" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/Clear_Data" to="." method="_on_clear_data_pressed"]

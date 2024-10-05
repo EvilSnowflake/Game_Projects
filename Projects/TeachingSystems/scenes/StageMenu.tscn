@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bw6bkk2r7mau1"]
+[gd_scene load_steps=10 format=3 uid="uid://bw6bkk2r7mau1"]
 
 [ext_resource type="Script" path="res://scripts/StageMenu.gd" id="1_did2m"]
 [ext_resource type="PackedScene" uid="uid://bv2uqp01l1qbi" path="res://scenes/menu_screen.tscn" id="1_njq2h"]
 [ext_resource type="PackedScene" uid="uid://fi5ofs2oiks8" path="res://scenes/starting_interface.tscn" id="2_xp8iv"]
 [ext_resource type="Script" path="res://scripts/Transition.gd" id="3_coabw"]
+[ext_resource type="AudioStream" uid="uid://c185bsy1txa5p" path="res://assets/Music/Main_Menu.mp3" id="5_i6fpo"]
 
 [sub_resource type="Animation" id="Animation_aspfa"]
 resource_name = "Appear"
@@ -59,6 +60,12 @@ _data = {
 
 [node name="Stage_Menu" type="Node2D"]
 script = ExtResource("1_did2m")
+
+[node name="Menu_Music" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_i6fpo")
+autoplay = true
+bus = &"Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

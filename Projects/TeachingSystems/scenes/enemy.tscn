@@ -1,48 +1,49 @@
 [gd_scene load_steps=9 format=3 uid="uid://d258jwu23yfiy"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_h7ety"]
-[ext_resource type="Texture2D" uid="uid://dlrir6pejlkoe" path="res://scenes/Drone1.png" id="6_ifky4"]
+[ext_resource type="Texture2D" uid="uid://dks7q2mfhu0yr" path="res://scenes/Drone1.png" id="6_ifky4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d2au5"]
 
 [sub_resource type="Animation" id="Animation_pdqlm"]
-tracks/0/type = "value"
+length = 0.6
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [8, 9, 10, 11, 12, 13]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.9),
+"times": PackedFloat32Array(0.6),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"queue_free"
 }]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13]
 }
 
 [sub_resource type="Animation" id="Animation_hvwhe"]
@@ -100,7 +101,7 @@ _data = {
 }
 
 [node name="Enemy" type="CharacterBody2D"]
-z_index = 2
+z_index = 5
 y_sort_enabled = true
 position = Vector2(0, -1)
 scale = Vector2(0.75, 0.75)
@@ -118,7 +119,6 @@ texture_filter = 1
 texture = ExtResource("6_ifky4")
 hframes = 4
 vframes = 4
-frame = 8
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
 "keep_anim_length": false,
@@ -127,7 +127,7 @@ metadata/_aseprite_wizard_config_ = {
 "o_folder": "",
 "o_name": "",
 "only_visible": false,
-"player": "AnimationPlayer",
+"player": "Drone_Player",
 "slice": "",
 "source": "res://assets/Stage/1 Drones/1/Drone1.aseprite"
 }

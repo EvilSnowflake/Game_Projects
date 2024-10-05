@@ -112,7 +112,7 @@ alignment = 1
 layout_mode = 2
 theme = ExtResource("5_35nuw")
 theme_override_font_sizes/font_size = 64
-text = "GAME TITLE"
+text = "adaptive teaching systems"
 
 [node name="Subtitle" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

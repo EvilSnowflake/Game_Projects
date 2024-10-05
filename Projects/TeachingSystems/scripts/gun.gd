@@ -61,3 +61,9 @@ func set_bullet_persistance(value: int):
 
 func get_bullet_persistance() -> int:
 	return bullet_persistance
+
+func set_attack_speed(value: float):
+	shooting_timer.wait_time = value
+	
+func get_attack_speed() -> float:
+	return shooting_timer.wait_time
