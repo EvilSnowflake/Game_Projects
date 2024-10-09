@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bv2uqp01l1qbi"]
+[gd_scene load_steps=10 format=3 uid="uid://bv2uqp01l1qbi"]
 
 [ext_resource type="Script" path="res://scripts/menu_screen.gd" id="1_tejro"]
 [ext_resource type="Texture2D" uid="uid://cdu8fh8kvdj02" path="res://assets/CityBackground/1 Backgrounds/1/Day/1.png" id="1_wxxc3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c31uatjch3gg1" path="res://assets/CityBackground/1 Backgrounds/1/Day/5.png" id="5_jkl2y"]
 [ext_resource type="Theme" uid="uid://dgwn8knwt1m3r" path="res://assets/Themes/main_theme.tres" id="6_6ogre"]
 [ext_resource type="PackedScene" uid="uid://vo06pvm6giba" path="res://scenes/controls.tscn" id="8_5dsp7"]
+[ext_resource type="FontFile" uid="uid://sab7pg0qk2nn" path="res://assets/GUI/10 Font/CyberpunkCraftpixPixel.otf" id="8_yuakj"]
 
 [node name="MenuScreen" type="Control" node_paths=PackedStringArray("stage_buttons")]
 layout_mode = 3
@@ -77,6 +78,27 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_jkl2y")
 
+[node name="Credits_Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1128.0
+offset_top = -39.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("6_6ogre")
+theme_override_colors/font_color = Color(0.728296, 0.475923, 0.0822524, 1)
+text = "CREATED BY PANAGIOTIS VAILAKIS MPSP2305
+ASSETS BY https://craftpix.net/
+MUSIC BY 
+https://found.ee/chromonicci
+https://found.ee/weirdinside
+"
+horizontal_alignment = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -114,6 +136,23 @@ layout_mode = 2
 theme = ExtResource("6_6ogre")
 text = "CLEAR DATA"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/TitleItems"]
+layout_mode = 2
+
+[node name="Code_Input" type="LineEdit" parent="MarginContainer/HBoxContainer/TitleItems/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+theme_override_fonts/font = ExtResource("8_yuakj")
+placeholder_text = "Input Code"
+alignment = 1
+
+[node name="Code_Button" type="Button" parent="MarginContainer/HBoxContainer/TitleItems/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("6_6ogre")
+text = "Apply Code"
+
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 12
@@ -141,30 +180,35 @@ theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Stage_Button_1" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 text = "1"
 icon_alignment = 1
 
 [node name="Stage_Button_2" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "2"
 
 [node name="Stage_Button_3" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "3"
 
 [node name="Stage_Button_4" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "4"
 
 [node name="Stage_Button_5" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
@@ -176,30 +220,35 @@ theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Stage_Button_6" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "6"
 
 [node name="Stage_Button_7" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "7"
 
 [node name="Stage_Button_8" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "8"
 
 [node name="Stage_Button_9" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
 text = "9"
 
 [node name="Stage_Button_10" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/Stages2"]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 theme = ExtResource("6_6ogre")
 disabled = true
@@ -213,3 +262,4 @@ layout_mode = 1
 [connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/Controls_Button" to="." method="_on_controls_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/Clear_Data" to="." method="_on_clear_data_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/TitleItems/HBoxContainer/Code_Button" to="." method="_on_code_button_pressed"]

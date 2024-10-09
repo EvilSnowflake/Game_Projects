@@ -35,7 +35,6 @@ func _physics_process(delta):
 	var direction = Input.get_vector("Left","Right","Up","Down")
 	velocity = direction * _speed
 	move_and_slide()
-	#print(direction[0])
 	if(direction[0] < 0):
 		player_sprite.flip_h = true
 	elif (direction[0] > 0):
@@ -66,7 +65,6 @@ func play_run_animation() -> void:
 	cyborg_player.play("Run")
 	
 func add_pickup():
-	print("Add Pickup")
 	_resources_to_lvl -= 1
 	if(_resources_to_lvl == 0):
 		print("Level Up")

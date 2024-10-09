@@ -15,7 +15,6 @@ func _physics_process(delta):
 	if(_travelled_distance > _bullet_range):
 		queue_free()
 
-
 func _on_body_entered(body):
 	if(_bullet_persistance == 0):
 		queue_free()

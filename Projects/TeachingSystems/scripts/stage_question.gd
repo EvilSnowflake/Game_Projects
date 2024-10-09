@@ -13,7 +13,6 @@ var correct_answer_num = 0
 signal correct_answer
 signal wrong_answer
 
-
 func set_numbers(wave: int, stage: int):
 	_wave_num = wave
 	_stage_num = stage
@@ -23,20 +22,19 @@ func create_question():
 	second_num = randi_range(1,_wave_num)
 	question_num_1.text = str(first_num)
 	question_num_2.text = str(second_num)
-	
 	correct_answer_num = randi_range(0,possible_answers.get_child_count()-1)
-	print(correct_answer_num)
+	var last_answer: int = 0
 	for i in range(possible_answers.get_child_count()):
 		if(i == correct_answer_num):
 			possible_answers.get_child(i).text = str(first_num*second_num)
 			possible_answers.get_child(i).pressed.connect(_on_question_button_pressed.bind(first_num*second_num))
 		else:
 			var wrong_answer_num = randi_range(1,100)
-			while(wrong_answer_num == first_num*second_num):
+			while(wrong_answer_num == first_num*second_num or wrong_answer_num == last_answer):
 				wrong_answer_num = randi_range(1,100)
 			possible_answers.get_child(i).text = str(wrong_answer_num)
 			possible_answers.get_child(i).pressed.connect(_on_question_button_pressed.bind(wrong_answer_num))
-		
+			last_answer = wrong_answer_num
 
 func _on_question_button_pressed(answer: int):
 	for i in range(possible_answers.get_child_count()):
@@ -48,4 +46,3 @@ func _on_question_button_pressed(answer: int):
 		correct_answer.emit()
 	else:
 		wrong_answer.emit()
-	#hide()

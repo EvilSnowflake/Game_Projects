@@ -9,7 +9,6 @@ extends Area2D
 @export var bullet_persistance = 0
 @export var bullet_damage: int = 1
 
-
 func _physics_process(_delta):
 	var enemies_in_range = get_overlapping_bodies()
 	if enemies_in_range.size() == 0:
@@ -26,7 +25,6 @@ func _physics_process(_delta):
 		white_red_gun.flip_v = true
 	else:
 		white_red_gun.flip_v = false
-		
 
 func shoot():
 	const BULLET = preload("res://scenes/bullet.tscn")
@@ -38,7 +36,6 @@ func shoot():
 	if(new_bullet.has_method("set_persistance")):
 		new_bullet.set_persistance(bullet_persistance)
 	shooting_point.add_child(new_bullet)
-
 
 func _on_timer_timeout():
 	shoot_effect.play("Fire")

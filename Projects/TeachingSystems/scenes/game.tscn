@@ -1004,7 +1004,8 @@ unique_name_in_owner = true
 stream = ExtResource("2_exy0s")
 
 [node name="Player" parent="." instance=ExtResource("1_xmqkd")]
-position = Vector2(517, 284)
+z_index = 3
+position = Vector2(530, 406)
 _speed = 250
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

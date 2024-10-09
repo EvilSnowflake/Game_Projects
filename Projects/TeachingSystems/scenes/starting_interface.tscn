@@ -117,6 +117,18 @@ text = "adaptive teaching systems"
 [node name="Subtitle" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_35nuw")
+text = "assignment created by panagiotis vailakis mpsp2305
+using godot game engine
+assets created by craftpix.net
+MUSIC TRACKS : 
+\"PASSENGERS\" BY CHROMONICCI
+\"MANIFOLD\" BY WEIRD INSIDE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Continue_Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_35nuw")
 theme_override_colors/font_color = Color(0.537011, 0.537011, 0.537011, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0

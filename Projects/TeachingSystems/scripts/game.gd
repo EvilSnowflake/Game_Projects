@@ -49,12 +49,10 @@ func spawn_stat_notification(message: String, color: Color):
 
 func _on_spawn_timer_timeout():
 	if(_enemies_left > 0):
-		print("Add enemy")
 		spawn_enemy()
 		_enemies_left -= 1
 		_enemies_left_alive += 1
 		enemies_anouncer.text = "Enemies left: " + str(_enemies_left_alive)
-		
 	
 	if(_enemies_left_alive == 0):
 		spawn_timer.stop()
@@ -67,13 +65,14 @@ func _on_spawn_timer_timeout():
 		return_to_stage_menu()
 
 func pause(pause_kind: int):
-	
 	if(_paused):
-		game_music.stream_paused = false
+		if(pause_kind == 0):
+			game_music.stream_paused = false
 		pauses.get_child(pause_kind).hide()
 		Engine.time_scale = 1
 	else:
-		game_music.stream_paused = true
+		if(pause_kind == 0):
+			game_music.stream_paused = true
 		pauses.get_child(pause_kind).show()
 		Engine.time_scale = 0
 		if(pauses.get_child(pause_kind).has_method("create_question")):
@@ -81,7 +80,6 @@ func pause(pause_kind: int):
 			pauses.get_child(pause_kind).create_question()
 		if(pauses.get_child(pause_kind).has_method("change_labels")):
 			pauses.get_child(pause_kind).change_labels(str(_propedia_num),STAGE_MATERIALS[_propedia_num - 1])
-	
 	_paused = !_paused
 
 func _on_resume_button_pressed():
@@ -96,17 +94,12 @@ func set_wave_enemies(num: int):
 func decrease_enemy_number_by_one():
 	_enemies_left_alive -= 1
 	enemies_anouncer.text = "Enemies left: " + str(_enemies_left_alive)
-	#player.add_bullet_damage(1)
-	#player.add_bullet_persistance(1)
-	#player.add_speed(10)
-	#player.add_max_health(10)
 
 func _increase_wave():
 	_wave += 1
 	set_wave_enemies(_wave * _propedia_num)
 	wave_announcer.text = str(_propedia_num)+"x"+str(_wave)
 	wave_announcer.get_child(0).play("Appear")
-	print("Wave increased")
 	if(_wave > 1):
 		pause(1)
 
@@ -114,19 +107,17 @@ func read_stage_menu(menu: Node2D):
 	stage_menu = menu
 
 func return_to_stage_menu():
-	if(_wave == _max_waves and stage_menu.has_method("unlock_next_stage")):
-		print("Won stage " + str(_propedia_num))
+	if(_wave == _max_waves and stage_menu.has_method("unlock_next_stage") and !_user_died):
 		stage_menu.unlock_next_stage(_propedia_num)
 	if(stage_menu.has_method("exit_game")):
 		queue_free()
-		print("Finished stage "+str(_propedia_num))
 		stage_menu.exit_game()
 	else:
 		get_tree().quit()
 
-
 func _on_exit_button_pressed():
 	pause(0)
+	_user_died = true
 	return_to_stage_menu()
 
 
@@ -134,33 +125,25 @@ func _on_player_health_depleted():
 	_user_died = true
 	await get_tree().create_timer(2.0).timeout
 	return_to_stage_menu()
-	
 
 func update_pickups(level: int, current_resources: int, res_to_lvl: int):
 	items_announcer.text = "Level: " + str(level)
 	level_bar.value = int((100 * current_resources)/res_to_lvl)
-	
-
 
 func _on_stage_question_correct_answer():
 	pause(1)
-	print("Correct add stats")
 	var rwrd = randi_range(0,2)
 	if(player.has_method("give_reward")):
 		var stat_change: Array[String] = player.give_reward(rwrd)
 		for change in stat_change:
 			spawn_stat_notification(change + " INCREASED!",Color.GREEN)
 
-
 func _on_stage_question_wrong_answer():
 	pause(1)
-	print("Wrong, disempower")
 	if(player.has_method("give_reward")):
 		var stat_change: Array[String] = player.give_reward(-1)
 		for change in stat_change:
 			spawn_stat_notification(change + " DECREASED!",Color.RED)
-
-
 
 func _on_stage_propedia_pressed_return():
 	game_music.playing = true

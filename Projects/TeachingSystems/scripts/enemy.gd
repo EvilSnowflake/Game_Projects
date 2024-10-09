@@ -7,8 +7,6 @@ extends CharacterBody2D
 @export var _speed: int = 50
 @export var _health: int = 4
 @export var receives_knockback: bool = true
-#const _PUSH_FORCE: int = 15.0
-#const _MIN_PUSH_FORCE: int = 10.0
 
 const ITEM_PICKUP = preload("res://scenes/item_pickup.tscn")
 
@@ -17,15 +15,6 @@ func _physics_process(_delta):
 		var direction = global_position.direction_to(player.global_position)
 		velocity = direction * _speed
 		move_and_slide()
-	
-	
-	##Not used
-	#for c in get_slide_collision_count():
-	#	var coll = get_slide_collision(c)
-	#	if coll.get_collider() is RigidBody2D:
-	#		var push_force = (_PUSH_FORCE * velocity.length() / _speed) + _MIN_PUSH_FORCE
-	#		coll.get_collider().apply_central_impulse(-coll.get_normal() * push_force)
-	##Not used
 
 func take_damage(amount: int):
 	_health -= amount
@@ -38,7 +27,6 @@ func take_damage(amount: int):
 		drone_player.play("Death")
 		var drop_down = ITEM_PICKUP.instantiate()
 		game.call_deferred("add_child",drop_down)
-		#get_parent().add_child(drop_down)
 		drop_down.global_position = global_position
 	else:
 		drone_player.queue("Float")

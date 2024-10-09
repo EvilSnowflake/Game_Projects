@@ -1,6 +1,8 @@
 extends Control
+
 @onready var stage_number = %Stage_Number
 @onready var stage_material = %Stage_Material
+
 signal pressed_return
 
 func change_labels(number: String, mat: String):
