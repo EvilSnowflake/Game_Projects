@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
 
-const NEAR = 70
-const VERYNEAR = 5
+const NEAR = 85
+const VERYNEAR = 2
+const friction = 5
 
 @export var MAXHEALTH = 100
 @export var SPEEDVALUE = 50
@@ -10,16 +11,30 @@ const VERYNEAR = 5
 @export var MAXDISTANCE = 0
 @export var UNCOMMONENEMY = false
 @export var spawnOnDeath : Node2D
+@export var dashLength = 200
+@export var dashSpeed = 3
 
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*0.75
 var parasiteInside
 var parasitePos
 var player
+var player_target
 var beingGrabbed = false
 var attacking = false
 var direction = -1
 var startPositionX
+var startPositionY
 var shooting = false
 var becomeEnemy = false
+var died = false
+var dashing = false
+var chasing = true
+var shaking = false
+var melee_word = "Melee"
+var ranged_word = "Ranged"
+var uncommon_word = "Uncommon"
+var anim_word = ""
+
 
 @onready var noc_area = $NocArea
 @onready var attack_timer = $AttackTimer
@@ -29,6 +44,8 @@ var becomeEnemy = false
 @onready var timer = $Timer
 @onready var posess_timer = $PosessTimer
 @onready var noc_collision_shape = $NocCollisionShape
+@onready var projectile_node = $ProjectileNode
+
 @onready var grab = $Grab
 @onready var sprite_2d = $Sprite2D
 @onready var melee = $Melee
@@ -42,40 +59,70 @@ const PARASITE = preload("res://scenes/parasite.tscn")
 func _ready():
 	health = MAXHEALTH
 	startPositionX = global_position.x
-	#print(startPositionX)
-	#print(MAXDISTANCE)
+	startPositionY = global_position.y
+	if(!SHOOTABILITY and !UNCOMMONENEMY):
+		anim_word = melee_word
+	elif(SHOOTABILITY and !UNCOMMONENEMY):
+		anim_word = ranged_word
+	else:
+		anim_word = uncommon_word
+	animation_player.play(anim_word+"_Idle")
+	print(startPositionX)
+	print(MAXDISTANCE)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	
-	if(becomeEnemy):
-		#print("The enemy is: " + str(position.x) + " and the player is: " +str(player.position.x))
-		var distP = self.position.distance_to(player.position)
-		if distP<=VERYNEAR:
-			return
-		#noc_collision_shape.look_at(player.global_position)
-		#look_at(player.global_position)
-		#look_at(player.position)
-		if position.x < player.position.x:
-			sprite_2d.flip_h = true
-			direction = 1
-			melee.rotation = 0
-		elif position.x > player.position.x:
-			sprite_2d.flip_h = false
-			melee.rotation = -180
-			direction = -1
-		if attacking or distP<NEAR:
-			return
-		velocity = Vector2(direction*SPEEDVALUE,0)
-		if (SHOOTABILITY):
-			return
-		if (player.global_position.x >= startPositionX + MAXDISTANCE or player.global_position.x <= startPositionX - MAXDISTANCE):
-			return
-		move_and_slide()
-		#position = position.move_toward(Vector2(player.position.x,0), SPEED * _delta)
+	if(died or !becomeEnemy):
+		velocity.x = 0
+		return
 		
+	if !is_on_floor_only():
+		velocity.y += gravity * _delta
+	else:
+		velocity.y = 0
+	
+	move_and_slide()
+	add_friction()
+	projectile_node.look_at(player_target.global_position)
+	
+	if(becomeEnemy and (!SHOOTABILITY or UNCOMMONENEMY)):
+		if velocity.x == 0  and !dashing and !shaking:
+			animation_player.play(anim_word + "_Possesed_Idle")
+		elif (velocity.x != 0 and !dashing):
+			animation_player.play(anim_word + "_Possesed_Move")
+		if (player.global_position.x >= startPositionX + MAXDISTANCE or player.global_position.x <= startPositionX - MAXDISTANCE) and !dashing:
+			chasing = false
+		else:
+			chasing = true
+		#velocity.x = direction*dashLength*dashSpeed
+		#print("The enemy is: " + str(position.x) + " and the player is: " +str(player.position.x))
+		var distP = position.distance_to(player.position)
+		var distX = position.x - player.position.x
+		if abs(distX)<=VERYNEAR:
+			return
+		if !chasing:
+			position = position.move_toward(Vector2(startPositionX,startPositionY), SPEEDVALUE * _delta)
+			return
+		
+		if attacking:
+			return
+			
+		if !dashing:
+			velocity = Vector2(direction*SPEEDVALUE,0)
+		#position = position.move_toward(Vector2(player.position.x,0), SPEED * _delta)
+	if position.x < player.position.x:
+		sprite_2d.flip_h = true
+		direction = 1
+		#melee.rotation = 0
+	elif position.x > player.position.x:
+		sprite_2d.flip_h = false
+		#melee.rotation = -180
+		direction = -1
 
+func add_friction():
+	velocity.x = move_toward(velocity.x, 0, friction)
 
 func _on_body_entered(body):
 	print(body.name)
@@ -89,6 +136,18 @@ func get_possesed(parasite, playerBody):
 	print("Started getting possesed by parasite!")
 	print(parasite)
 	player = playerBody
+	print(player.global_position)
+	for i in range(player.get_child_count()):
+		if(player.get_child(i).name != "Enemy_Target"):
+			continue
+		else:
+			player_target = player.get_child(i)
+			print("There is a target")
+			break
+	if player_target == null:
+		print("There is not")
+		player_target = player
+	print(player_target.global_position)
 	parasitePos = parasite.position
 	parasiteInside = parasite
 	posess_timer.start()
@@ -118,6 +177,7 @@ func take_damage(amount):
 		attack_timer.wait_time = 1
 	
 	if(health <= 0):
+		died = true
 		player.release_enemy()
 		#player.velocity = Vector2(0,-100)
 		attack_timer.stop()
@@ -150,6 +210,7 @@ func take_damage(amount):
 		if(spawnOnDeath != null):
 			spawnOnDeath.enable_and_show_node()
 		
+		
 
 
 func _on_posess_timer_timeout():
@@ -165,47 +226,63 @@ func _on_posess_timer_timeout():
 
 func turn_enemy():
 	if health > 0 :
-		animation_player.play("Enemying")
+		animation_player.play(anim_word + "_Possesed_Idle")
 
 func _on_attack_timer_timeout():
 	#depending on where the player is either throw projectile, attack directly or throw them off of yourself
 	#Or we can make 2 types of enemies, once the walk up top the player and do a close attack
 	#And ones that sit and throw projectiles
-	noc_collision_shape.look_at(player.global_position)
-	var startingRot = noc_collision_shape.rotation
-	noc_collision_shape.rotation_degrees = noc_collision_shape.rotation_degrees + 90
+	
+	#var startingRot = projectile_node.rotation
+	#projectile_node.rotation_degrees = projectile_node.rotation_degrees + 90
 	var distP = self.position.distance_to(player.position)
-	var projSpawnPos = noc_collision_shape.global_position
-	var projSpawnRot = noc_collision_shape.rotation
+	#var projSpawnPos = projectile_node.global_position
+	#var projSpawnRot = projectile_node.rotation
 	#print("Attack, player is " + str(distP) + " amount away, we are at " + str(position) + " and they are at "+ str(player.position))
 	#print("Rotation set is : " + str(startingRot))
 	if beingGrabbed:
-		player.take_damage(40)
+		player.take_damage(20)
 		player.velocity = Vector2(0,-200)
 		player.release_enemy()
-		#animation_player.play("ShakeOff")
+		toggle_shaking()
+		animation_player.play(anim_word + "_Possesed_ShakeOut")
+		
 		return
 	
 	if(UNCOMMONENEMY and shooting):
-		shoot(projSpawnPos, projSpawnRot, startingRot, 1)
+		shoot(1)
 		shooting = false
 		return
 	
 	
 	if(SHOOTABILITY):
 		#print(projSpawnRot)
-		shoot(projSpawnPos, projSpawnRot, startingRot, 1)
+		#shoot(1)
+		attack_timer.stop()
+		animation_player.play(anim_word+"_Possesed_Attack")
+		animation_player.queue(anim_word+"_Possesed_Idle")
 		return
 	
 	if( distP < NEAR):
+		dashing = true
 		attacking = true
-		animation_player.play("Attacking")
+		animation_player.play(anim_word+"_Possesed_Attack")
+		animation_player.queue(anim_word+"_Possesed_Idle")
+		#velocity.y = -500
+		velocity.x = direction*dashLength
+		
 		shooting = true
+		attack_timer.stop()
 	else:
 		attacking = false
 		
 
-func shoot(spawnPosition, spawnRotation, startingSpawnRotation, projectileCollision):
+func shoot(projectileCollision):
+	var startingSpawnRotation = projectile_node.rotation
+	projectile_node.rotation_degrees = projectile_node.rotation_degrees + 90
+	var spawnPosition = projectile_node.global_position
+	var spawnRotation = projectile_node.rotation
+	
 	var projInstance = projectile.instantiate()
 	projInstance.dir = spawnRotation
 	projInstance.spawnPos = spawnPosition
@@ -225,10 +302,18 @@ func released():
 func _on_noc_area_body_entered(body):
 	print(body.name)
 	take_damage(25)
-	body.velocity = -1 * body.velocity
 	#if(body.name == "Player"):
 	#	body.stickToObject(self)
+	body.velocity = -1 * body.velocity
 
 func toggle_attacking():
 	attacking = !attacking
 
+func toggle_dashing():
+	dashing = !dashing
+
+func toggle_shaking():
+	shaking = !shaking
+
+func stop_vel():
+	velocity.x = 0

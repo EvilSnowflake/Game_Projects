@@ -11,6 +11,9 @@ extends CharacterBody2D
 #@onready var health_label = $"../UserInterface/EnergyPanel/MarginContainer/VBoxContainer/HBoxContainer/HealthLabel"
 @onready var health_label = %HealthLabel
 @onready var die_timer = $DieTimer
+@onready var animation_player = $AnimationPlayer
+@onready var sprite_2d = $Sprite2D
+@onready var wall_area = $WallArea
 
 
 const SPEED = 200.0
@@ -21,9 +24,6 @@ const wall_jump_pushbck = 100
 const velocity_mult = 3
 const ARROW = preload("res://scenes/arrow.tscn")
 
-const MAXJUMPS = 1
-
-const MAXSLINGS = 1
 const BIGACC = 400
 const NEAR = 20 
 const MAXHEALTH = 100
@@ -47,7 +47,9 @@ var game_frozen = false
 var moveTo
 var was_on_floor = false
 var vulnerable = true
-var MAXGRABS = 0
+@export var MAXJUMPS = 1
+@export var MAXSLINGS = 1
+@export var MAXGRABS = 0
 @export var health = 75
 
 func _ready():
@@ -56,13 +58,24 @@ func _ready():
 	#print(health)
 
 func _physics_process(delta):
+	
 	if(moveTo == null):
-		var direction = Input.get_axis("MoveLeft", "MoveRight")
-		if direction:
+		var direction = Input.get_axis("MoveLeft", "MoveRight") * int(vulnerable) * int(!motion)
+		if direction > 0:
 			#print(velocity.x)
 			#velocity.x = direction*SPEED
 			accelerate(direction)
-		elif !direction and !motion:
+			if(!is_wall_sticking):
+				animation_player.play("Stick")
+				sprite_2d.flip_h = false
+		elif direction < 0:
+			accelerate(direction)
+			if(!is_wall_sticking):
+				animation_player.play("Stick")
+				sprite_2d.flip_h = true
+		elif !direction and !motion and !curInput:
+			if (is_on_floor() and vulnerable):
+				animation_player.play("Idle")
 			add_friction()
 		jump(delta)
 		was_on_floor = is_on_floor()
@@ -120,18 +133,20 @@ func add_friction():
 	velocity.x = move_toward(velocity.x, 0, friction)
 
 func check_ground():
-	if is_on_floor() or is_on_wall():
+	if is_on_floor() or is_wall_sticking:
 		numOfGrabs = MAXGRABS
 		numOfJumps = MAXJUMPS
 		numOfSlings = MAXSLINGS
 
 func jump(delta):
-	
+	if (curInput):
+		return
 	if(!is_wall_sticking):
 		velocity.y += gravity * delta
 	if Input.is_action_just_pressed("Space") and (is_on_floor() or is_on_wall() or !coyote_timer.is_stopped()):
 		release_enemy()
-		
+		animation_player.play("Move")
+		#print("Jumped")
 		tick_timer.stop()
 		if numOfJumps > 0:
 			numOfJumps -= 1
@@ -148,12 +163,26 @@ func jump(delta):
 
 func wall_stick(_delta):
 	if is_on_wall_only():
-		if Input.is_action_pressed("MoveLeft") or Input.is_action_pressed("MoveRight"):
+		wall_area.monitoring = true
+		wall_area.monitorable = true
+		animation_player.play("Sit")
+		if (Input.is_action_pressed("MoveLeft") or Input.is_action_pressed("MoveRight")) and vulnerable:
 			is_wall_sticking = true
 		else:
 			is_wall_sticking = false
+		#if ray_cast_2d.is_colliding():
+		#	sprite_2d.rotation_degrees = -90
+		#else:
+		#	sprite_2d.rotation_degrees = 90
+		if wall_area.get_overlapping_bodies().size() > 0:
+			sprite_2d.rotation_degrees = -90
+		else:
+			sprite_2d.rotation_degrees = 90
 	else:
 		is_wall_sticking = false
+		wall_area.monitoring = false
+		wall_area.monitorable = false
+		sprite_2d.rotation_degrees = 0
 	
 	if is_wall_sticking:
 		velocity.y = move_toward(velocity.y, 0, friction)
@@ -162,15 +191,17 @@ func wall_stick(_delta):
 func sling():
 	#print(numOfSlings)
 	#print(numOfJumps)
-	if game.paused :
+	if game.paused or !vulnerable:
 		return
 	if numOfSlings > 0 and (is_on_floor() or is_on_wall() or !coyote_timer.is_stopped() or objectSticked != null or curInput):
 		if Input.is_action_just_pressed("MouseLeftClick"):
 			set_collision_layer_value(2,true)
 			set_collision_mask_value(2,true)
+			animation_player.play("Sit")
 			freeze_time()
 			tempAr = createArrow()
 			curInput = true
+			motion = true
 			velocity.x = 0
 			startCur = get_global_mouse_position()
 			print(get_global_mouse_position())
@@ -196,7 +227,7 @@ func sling():
 			#velocity = Input.get_last_mouse_velocity() * (-1)
 			#print(startCur.distance_to(get_global_mouse_position()))
 			curInput = false
-			motion = true
+			
 			float_timer.start()
 
 func createArrow():
@@ -224,6 +255,7 @@ func stickToObject(object):
 	#	height_sticked = max_height
 	objectSticked = object
 	objectSticked.get_parent().get_grabbed(self)
+	animation_player.play("Idle")
 	tick_timer.start()
 
 func stayDuringStick():
@@ -311,11 +343,13 @@ func _on_tick_timer_timeout():
 func take_damage(amount):
 	if(!vulnerable):
 		return
+	animation_player.play("Hurt")
 	health = clamp(health-amount,0,MAXHEALTH)
 	print("Took " + str(amount) + " damage and now i have " + str(health) + " health!")
 	if(health == 0):
 		die()
 	vulnerable = false
+	is_wall_sticking = false
 	invulnerability_timer.start()
 	health_label.text = str(health)
 	print("start invulnerability")

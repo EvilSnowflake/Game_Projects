@@ -11,9 +11,12 @@ var beingGrabbed = false
 var coll = 1
 
 @onready var collision_shape = $CollisionShape
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
 	#print("I spawn with rotation : " + str(dir))
+	animation_player.play("Fired")
+	animation_player.queue("Aired")
 	global_position = spawnPos
 	global_rotation = spawnRot
 	z_index = zdex

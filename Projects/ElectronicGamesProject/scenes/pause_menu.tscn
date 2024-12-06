@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://cw5g71jv31lkh" path="res://assets/themes/main_theme.tres" id="1_b0m6b"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="2_63aka"]
-[ext_resource type="Texture2D" uid="uid://cj141vvchbgqq" path="res://scenes/ElectronicGames_PauseMenu.png" id="3_ntcp4"]
+[ext_resource type="Texture2D" uid="uid://le2pajg2guhq" path="res://assets/Pause_Screen.png" id="3_goda1"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -22,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_ntcp4")
+texture = ExtResource("3_goda1")
 metadata/_aseprite_wizard_config_ = {
 "i_mode": 1,
 "keep_anim_length": false,

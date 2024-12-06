@@ -1,46 +1,97 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgvt4l3hon0gj"]
+[gd_scene load_steps=17 format=3 uid="uid://bgvt4l3hon0gj"]
 
 [ext_resource type="Script" path="res://scripts/parasite.gd" id="1_6an73"]
-[ext_resource type="Texture2D" uid="uid://b7hpo5n5nkrjc" path="res://scenes/ElectronicGames_Parasite.png" id="2_igeb4"]
+[ext_resource type="Shader" path="res://shaders/parasite.gdshader" id="2_j1aix"]
+[ext_resource type="Texture2D" uid="uid://dmase77068vix" path="res://scenes/Parasite.png" id="3_iisfr"]
 
-[sub_resource type="Animation" id="Animation_78um3"]
-length = 1.1
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3duob"]
+resource_local_to_scene = true
+shader = ExtResource("2_j1aix")
+shader_parameter/bright_amount = 0.0
+shader_parameter/alpha_amount = 0.5
+
+[sub_resource type="Animation" id="Animation_2kr7p"]
+length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath("Sprite2D:visible")
 tracks/0/interp = 1
-tracks/0/loop_wrap = true
+tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.3, 0.3)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = false
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = false
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 5, 3, 2, 1, 6]
+"values": [18, 19, 20, 21, 22, 23]
+}
+
+[sub_resource type="Animation" id="Animation_17j1p"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_78um3"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_qn3l7"]
@@ -55,11 +106,39 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.3, 0.3)]
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gih47"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 17]
 }
 
 [sub_resource type="Animation" id="Animation_rr52u"]
-length = 0.1
+length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -71,7 +150,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.5, 0.5)]
+"values": [Vector2(1.5, 1.5)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -92,10 +171,10 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [8]
+"values": [18, 19, 20, 21, 22, 23]
 }
 
 [sub_resource type="Animation" id="Animation_hqpcc"]
@@ -111,7 +190,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0.3, 0.3), Vector2(0.01, 0.01)]
+"values": [Vector2(1, 1), Vector2(0.01, 0.01)]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -129,7 +208,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_nyn0l"]
-length = 0.1
+length = 0.7
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -162,19 +241,51 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27, 28, 29, 30]
+}
+
+[sub_resource type="Animation" id="Animation_e2oag"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [7]
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cm14m"]
 _data = {
+"BluePar": SubResource("Animation_2kr7p"),
+"GreenPar": SubResource("Animation_17j1p"),
 "Idle": SubResource("Animation_78um3"),
 "RESET": SubResource("Animation_qn3l7"),
+"RedPar": SubResource("Animation_gih47"),
 "Remenant": SubResource("Animation_rr52u"),
 "Shrink": SubResource("Animation_hqpcc"),
-"Unpowered": SubResource("Animation_nyn0l")
+"Unpowered": SubResource("Animation_nyn0l"),
+"YellowPar": SubResource("Animation_e2oag")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g0ulp"]
@@ -184,14 +295,15 @@ radius = 10446.9
 radius = 36.6667
 
 [node name="Parasite" type="Node2D"]
-scale = Vector2(0.3, 0.3)
+material = SubResource("ShaderMaterial_3duob")
 script = ExtResource("1_6an73")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_igeb4")
-hframes = 3
-vframes = 3
+use_parent_material = true
+texture = ExtResource("3_iisfr")
+hframes = 6
+vframes = 6
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
 "keep_anim_length": false,
@@ -202,9 +314,9 @@ metadata/_aseprite_wizard_config_ = {
 "only_visible": false,
 "player": "AnimationPlayer",
 "slice": "",
-"source": "res://assets/asepritefiles/ElectronicGames_Parasite.aseprite"
+"source": "res://assets/MetroidFuseAssets/Parasite.aseprite"
 }
-metadata/_aseprite_wizard_source_file_hash_ = "88c79e0b275d2bd75de29c4afc57c1cd"
+metadata/_aseprite_wizard_source_file_hash_ = "4e5cf6328bafb893d0e82bff9d98ff32"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
