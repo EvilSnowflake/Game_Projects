@@ -39,4 +39,3 @@ func receive_knockback(knockback_strength: float):
 
 func set_game(parnt: Node2D):
 	game = parnt
-

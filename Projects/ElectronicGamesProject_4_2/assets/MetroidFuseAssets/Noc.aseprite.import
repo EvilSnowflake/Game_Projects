@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://r5qw5pxgxf5y"
+path="res://.godot/imported/Noc.aseprite-a9ba9079c1daf2493bb0abf5cac796fb.res"
+
+[deps]
+
+source_file="res://assets/MetroidFuseAssets/Noc.aseprite"
+dest_files=["res://.godot/imported/Noc.aseprite-a9ba9079c1daf2493bb0abf5cac796fb.res"]
+
+[params]
+

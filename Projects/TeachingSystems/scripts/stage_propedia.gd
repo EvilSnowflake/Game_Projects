@@ -15,4 +15,3 @@ func _process(_delta):
 	var mouseClick = Input.is_action_pressed("MouseLeft")
 	if(mouseClick):
 		pressed_return.emit()
-

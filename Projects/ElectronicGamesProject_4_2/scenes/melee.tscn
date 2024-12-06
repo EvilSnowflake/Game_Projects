@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://btbiraaurb2bt"]
+
+[ext_resource type="Script" path="res://scripts/melee.gd" id="1_dx4yq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5mwh"]
+size = Vector2(15.9959, 22.0082)
+
+[node name="Melee" type="Area2D"]
+script = ExtResource("1_dx4yq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.00564586, -8.00141)
+rotation = -1.57111
+shape = SubResource("RectangleShape2D_w5mwh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

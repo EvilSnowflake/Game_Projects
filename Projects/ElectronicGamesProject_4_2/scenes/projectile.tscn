@@ -1,0 +1,172 @@
+[gd_scene load_steps=10 format=3 uid="uid://desb5048nlvxs"]
+
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_5gqyt"]
+[ext_resource type="Texture2D" uid="uid://lotyaou14qof" path="res://scenes/GreenProj.png" id="2_0b60e"]
+
+[sub_resource type="Animation" id="Animation_kalqg"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_p3iqq"]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_wrvcy"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ilv1d"]
+_data = {
+"Aired": SubResource("Animation_kalqg"),
+"Fired": SubResource("Animation_p3iqq"),
+"Traveling": SubResource("Animation_wrvcy")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o4ro0"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nv6d8"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xl6vs"]
+radius = 3.0
+
+[node name="Projectile" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_5gqyt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -1)
+rotation = 3.14159
+texture = ExtResource("2_0b60e")
+hframes = 3
+vframes = 3
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://assets/GreenProj.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "cb8b1501645f7ccb83cb6d4a5fbcc9f6"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ilv1d")
+}
+autoplay = "Fired"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_o4ro0")
+disabled = true
+debug_color = Color(0.392157, 0.615686, 0, 0.631373)
+
+[node name="CollisionShape" type="Area2D" parent="."]
+position = Vector2(-4, 0)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape"]
+position = Vector2(4, -1)
+shape = SubResource("CircleShape2D_nv6d8")
+debug_color = Color(0, 0.486275, 0.254902, 0.419608)
+
+[node name="ProjectileGrab" type="Area2D" parent="."]
+position = Vector2(-4, 0)
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileGrab"]
+position = Vector2(4, -1)
+shape = SubResource("CircleShape2D_xl6vs")
+debug_color = Color(0.526727, 0.571498, 0.0720803, 0.42)
+
+[node name="SelfDestructTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="DebugTimer" type="Timer" parent="."]
+
+[connection signal="area_shape_entered" from="CollisionShape" to="." method="_on_collision_shape_area_shape_entered"]
+[connection signal="body_entered" from="CollisionShape" to="." method="_on_collision_shape_body_entered"]
+[connection signal="timeout" from="SelfDestructTimer" to="." method="_on_self_destruct_timer_timeout"]
+[connection signal="timeout" from="DebugTimer" to="." method="_on_debug_timer_timeout"]

@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgvt4l3hon0gj"]
+
+[ext_resource type="Script" path="res://scripts/parasite.gd" id="1_6an73"]
+[ext_resource type="Texture2D" uid="uid://b7hpo5n5nkrjc" path="res://scenes/ElectronicGames_Parasite.png" id="2_igeb4"]
+
+[sub_resource type="Animation" id="Animation_78um3"]
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cm14m"]
+_data = {
+"Idle": SubResource("Animation_78um3")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g0ulp"]
+radius = 440.0
+
+[node name="Parasite" type="Node2D"]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_6an73")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_igeb4")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://assets/asepritefiles/ElectronicGames_Parasite.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "9912cb9e1b9b556ad11d34b6ce68d152"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cm14m")
+}
+
+[node name="SearchZone" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchZone"]
+shape = SubResource("CircleShape2D_g0ulp")
+
+[connection signal="area_shape_entered" from="SearchZone" to="." method="_on_search_zone_area_shape_entered"]
+[connection signal="body_entered" from="SearchZone" to="." method="_on_search_zone_body_entered"]
+[connection signal="body_shape_entered" from="SearchZone" to="." method="_on_search_zone_body_shape_entered"]
