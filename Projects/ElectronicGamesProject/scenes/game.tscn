@@ -6103,7 +6103,7 @@ UNCOMMONENEMY = true
 direction = 1
 
 [node name="NOCUNCOMMON" parent="Enemies" node_paths=PackedStringArray("spawnOnDeath") instance=ExtResource("3_7n1jx")]
-position = Vector2(1871, -140)
+position = Vector2(1883, -134)
 scale = Vector2(3, 3)
 MAXHEALTH = 200
 MAXDISTANCE = 200
