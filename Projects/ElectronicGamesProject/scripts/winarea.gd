@@ -6,4 +6,4 @@ func _ready():
 	self.body_entered.connect(on_col_body_entered)
 
 func on_col_body_entered(_body : Node2D):
-	get_tree().reload_current_scene()
+	get_tree().call_deferred("reload_current_scene")

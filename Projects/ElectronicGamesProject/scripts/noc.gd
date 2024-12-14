@@ -7,12 +7,14 @@ const friction = 5
 
 @export var MAXHEALTH = 100
 @export var SPEEDVALUE = 50
+@export var UNCOMMONSPEEDVALUE = 250
 @export var SHOOTABILITY = false
 @export var MAXDISTANCE = 0
 @export var UNCOMMONENEMY = false
 @export var spawnOnDeath : Node2D
 @export var dashLength = 200
 @export var dashSpeed = 3
+@export var direction = -1
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*0.75
 var parasiteInside
@@ -21,7 +23,7 @@ var player
 var player_target
 var beingGrabbed = false
 var attacking = false
-var direction = -1
+
 var startPositionX
 var startPositionY
 var shooting = false
@@ -34,6 +36,7 @@ var melee_word = "Melee"
 var ranged_word = "Ranged"
 var uncommon_word = "Uncommon"
 var anim_word = ""
+var fire_source
 
 
 @onready var noc_area = $NocArea
@@ -45,10 +48,12 @@ var anim_word = ""
 @onready var posess_timer = $PosessTimer
 @onready var noc_collision_shape = $NocCollisionShape
 @onready var projectile_node = $ProjectileNode
+@onready var uncommon_projectile_node = $UncommonProjectileNode
 
 @onready var grab = $Grab
 @onready var sprite_2d = $Sprite2D
 @onready var melee = $Melee
+@onready var melee_uncommon = $MeleeUNCOMMON
 
 const PARASITE = preload("res://scenes/parasite.tscn")
 
@@ -66,9 +71,16 @@ func _ready():
 		anim_word = ranged_word
 	else:
 		anim_word = uncommon_word
+		z_index = -1
+		set_collision_layer_value(5,false)
+		set_collision_mask_value(5,false)
 	animation_player.play(anim_word+"_Idle")
-	print(startPositionX)
-	print(MAXDISTANCE)
+	#print(startPositionX)
+	#print(MAXDISTANCE)
+	if(UNCOMMONENEMY):
+		fire_source = uncommon_projectile_node
+	else:
+		fire_source = projectile_node
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -78,16 +90,25 @@ func _process(_delta):
 		velocity.x = 0
 		return
 		
-	if !is_on_floor_only():
+	if !is_on_floor_only() and !UNCOMMONENEMY:
 		velocity.y += gravity * _delta
 	else:
 		velocity.y = 0
-	
+	fire_source.look_at(player_target.global_position)
+	if(UNCOMMONENEMY and !attacking):
+		position = position.move_toward(Vector2(startPositionX,startPositionY), UNCOMMONSPEEDVALUE * _delta)
+		return
+	if(UNCOMMONENEMY and dashing and (position.x < startPositionX+(MAXDISTANCE*direction))):
+		velocity = Vector2(direction*UNCOMMONSPEEDVALUE,0)
+	elif(UNCOMMONENEMY and (position.x >= startPositionX+(MAXDISTANCE*direction))):
+		velocity.x = 0
+		return
 	move_and_slide()
 	add_friction()
-	projectile_node.look_at(player_target.global_position)
+	if(UNCOMMONENEMY):
+		return
 	
-	if(becomeEnemy and (!SHOOTABILITY or UNCOMMONENEMY)):
+	if(becomeEnemy and !SHOOTABILITY):
 		if velocity.x == 0  and !dashing and !shaking:
 			animation_player.play(anim_word + "_Possesed_Idle")
 		elif (velocity.x != 0 and !dashing):
@@ -232,7 +253,7 @@ func _on_attack_timer_timeout():
 	#depending on where the player is either throw projectile, attack directly or throw them off of yourself
 	#Or we can make 2 types of enemies, once the walk up top the player and do a close attack
 	#And ones that sit and throw projectiles
-	
+	print("attack")
 	#var startingRot = projectile_node.rotation
 	#projectile_node.rotation_degrees = projectile_node.rotation_degrees + 90
 	var distP = self.position.distance_to(player.position)
@@ -249,12 +270,20 @@ func _on_attack_timer_timeout():
 		
 		return
 	
+	
 	if(UNCOMMONENEMY and shooting):
-		shoot(1)
+		animation_player.play(anim_word+"_Possesed_Attack")
+		animation_player.queue(anim_word+"_Possesed_Idle")
 		shooting = false
 		return
-	
-	
+	elif (UNCOMMONENEMY and !shooting):
+		animation_player.play(anim_word + "_Possesed_Attack_Melee")
+		animation_player.queue(anim_word+"_Possesed_Idle")
+		attacking = true
+		#dashing = true
+		shooting = true
+		return
+		
 	if(SHOOTABILITY):
 		#print(projSpawnRot)
 		#shoot(1)
@@ -262,6 +291,7 @@ func _on_attack_timer_timeout():
 		animation_player.play(anim_word+"_Possesed_Attack")
 		animation_player.queue(anim_word+"_Possesed_Idle")
 		return
+	
 	
 	if( distP < NEAR):
 		dashing = true
@@ -278,10 +308,10 @@ func _on_attack_timer_timeout():
 		
 
 func shoot(projectileCollision):
-	var startingSpawnRotation = projectile_node.rotation
-	projectile_node.rotation_degrees = projectile_node.rotation_degrees + 90
-	var spawnPosition = projectile_node.global_position
-	var spawnRotation = projectile_node.rotation
+	var startingSpawnRotation = fire_source.rotation
+	fire_source.rotation_degrees = fire_source.rotation_degrees + 90
+	var spawnPosition = fire_source.global_position
+	var spawnRotation = fire_source.rotation
 	
 	var projInstance = projectile.instantiate()
 	projInstance.dir = spawnRotation

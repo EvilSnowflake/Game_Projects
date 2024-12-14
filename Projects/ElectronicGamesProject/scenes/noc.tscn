@@ -75,7 +75,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_6nj7g"]
 length = 1.3
-loop_mode = 1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -114,9 +113,12 @@ tracks/2/path = NodePath("../AttackTimer")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.9),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [],
+"method": &"stop"
+}, {
 "args": [-1],
 "method": &"start"
 }]
@@ -204,7 +206,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_4rcal"]
 length = 0.5
-loop_mode = 1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -389,9 +390,12 @@ tracks/1/path = NodePath("../AttackTimer")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1.2),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [],
+"method": &"stop"
+}, {
 "args": [-1],
 "method": &"start"
 }]
@@ -535,7 +539,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_5ep56"]
 length = 1.5
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -560,10 +563,40 @@ tracks/1/keys = {
 "update": 1,
 "values": [115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.633333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [1],
+"method": &"shoot"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AttackTimer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"stop"
+}, {
+"args": [-1],
+"method": &"start"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_1w80y"]
 length = 4.2
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -587,6 +620,60 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [100, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 145, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../MeleeUNCOMMON")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6, 3.7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"enable_attacking"
+}, {
+"args": [],
+"method": &"disable_attacking"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AttackTimer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"stop"
+}, {
+"args": [-1],
+"method": &"start"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("..")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.466667, 1.23333, 2.73333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"toggle_dashing"
+}, {
+"args": [],
+"method": &"toggle_dashing"
+}, {
+"args": [],
+"method": &"toggle_attacking"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_76gvl"]
@@ -669,6 +756,7 @@ texture = ExtResource("2_qjtgk")
 flip_h = true
 hframes = 14
 vframes = 13
+frame = 115
 metadata/_aseprite_wizard_config_ = {
 "i_mode": 0,
 "keep_anim_length": false,
@@ -707,6 +795,12 @@ scale = Vector2(1.32, 1.44674)
 monitoring = false
 monitorable = false
 
+[node name="MeleeUNCOMMON" parent="." instance=ExtResource("3_8ugsl")]
+position = Vector2(2.5, -5)
+scale = Vector2(2.68, 1.80674)
+monitoring = false
+monitorable = false
+
 [node name="NocArea" type="Area2D" parent="."]
 position = Vector2(1, 1)
 collision_layer = 6
@@ -730,6 +824,9 @@ shape = SubResource("CircleShape2D_o1a8x")
 
 [node name="ProjectileNode" type="Node2D" parent="."]
 position = Vector2(0, -25)
+
+[node name="UncommonProjectileNode" type="Node2D" parent="."]
+position = Vector2(16, -21.5)
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
