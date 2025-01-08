@@ -37,7 +37,7 @@ func resize():
 	windowMesh.center_offset.x = vp_size.x / 2
 	windowMesh.center_offset.y = vp_size.y / 2
 
-func _on_body_enter_transition_area(body : Node2D, area_num: int):
+func _on_body_enter_transition_area(_body : Node2D, area_num: int):
 	nextbackgroundNum = area_num
 	if(nextbackgroundNum == currbackgroundNum):
 		return

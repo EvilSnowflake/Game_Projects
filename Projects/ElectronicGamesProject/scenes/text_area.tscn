@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3sdt6x7bg5w5"]
+
+[ext_resource type="Script" path="res://scripts/text_area.gd" id="1_8e7iq"]
+
+[node name="text_area" type="Area2D"]
+collision_layer = 64
+collision_mask = 64
+script = ExtResource("1_8e7iq")

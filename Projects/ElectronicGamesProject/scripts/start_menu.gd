@@ -3,8 +3,11 @@ extends Control
 @onready var start_button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/StartButton
 @onready var exit_button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ExitButton
 @onready var mesh_instance_2d = $CanvasLayer/MeshInstance2D
-
+@onready var button_sound_fx = $ButtonSoundFx
 @onready var windowMesh : QuadMesh = load("res://Meshes/WindowMesh.tres")
+@onready var wait_timer = $WaitTimer
+
+var _timer_finish = false
 
 #@onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/ExitButton as Button
 @export var startLevel = "res://scenes/game.tscn"
@@ -30,7 +33,17 @@ func resize():
 
 func on_start_button_down() -> void:
 	#print("Pressed start")
+	if(!wait_timer.is_stopped()):
+		return
+	button_sound_fx.play()
+	wait_timer.start()
+	await wait_timer.timeout
 	get_tree().change_scene_to_file(startLevel)
 	
 func on_exit_button_down() -> void:
+	if(!wait_timer.is_stopped()):
+		return
+	button_sound_fx.play()
+	wait_timer.start()
+	await wait_timer.timeout
 	get_tree().quit()

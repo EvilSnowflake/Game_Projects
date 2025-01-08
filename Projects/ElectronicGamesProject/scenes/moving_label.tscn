@@ -1,0 +1,109 @@
+[gd_scene load_steps=7 format=3 uid="uid://dm04jekq3ljvg"]
+
+[ext_resource type="Script" path="res://scripts/moving_label.gd" id="1_1e6as"]
+[ext_resource type="Theme" uid="uid://cw5g71jv31lkh" path="res://assets/themes/main_theme.tres" id="2_g52u7"]
+
+[sub_resource type="Animation" id="Animation_fyilv"]
+resource_name = "Fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"erase_text"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_v1q8h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dg48v"]
+_data = {
+"Fade": SubResource("Animation_fyilv"),
+"RESET": SubResource("Animation_v1q8h")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jiblo"]
+radius = 17.0
+
+[node name="moving_label" type="Node2D"]
+script = ExtResource("1_1e6as")
+
+[node name="Text" type="Label" parent="."]
+unique_name_in_owner = true
+z_index = 6
+offset_left = -172.0
+offset_top = -19.0
+offset_right = 168.0
+offset_bottom = 24.0
+theme = ExtResource("2_g52u7")
+theme_override_font_sizes/font_size = 15
+text = "
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TextChangeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+
+[node name="FadeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_dg48v")
+}
+
+[node name="TextArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TextArea"]
+shape = SubResource("CircleShape2D_jiblo")
+
+[node name="FinishButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = -24.0
+offset_top = 58.0
+offset_right = 98.0
+offset_bottom = 90.0
+scale = Vector2(0.426667, 0.545455)
+theme = ExtResource("2_g52u7")
+disabled = true
+text = "Finish"

@@ -1,7 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cigqhyb5fycuh"]
+[gd_scene load_steps=17 format=3 uid="uid://cigqhyb5fycuh"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_0vfmp"]
 [ext_resource type="Texture2D" uid="uid://bvqg71h5o2c88" path="res://scenes/metroid.png" id="2_u3np5"]
+[ext_resource type="AudioStream" uid="uid://b3vhlrgmgqrai" path="res://assets/Sounds/Jumping.ogg" id="3_6yvir"]
+[ext_resource type="AudioStream" uid="uid://k7sx03k67ftm" path="res://assets/Sounds/IdleS.ogg" id="4_onbje"]
+[ext_resource type="AudioStream" uid="uid://d03kbnpkavfwh" path="res://assets/Sounds/Hurt.ogg" id="4_xanst"]
+[ext_resource type="AudioStream" uid="uid://bg3ycqy1ecly0" path="res://assets/Sounds/Movement.ogg" id="5_yikjy"]
 
 [sub_resource type="Animation" id="Animation_hm2or"]
 length = 0.7
@@ -224,7 +228,6 @@ scale = Vector2(3.0463, 3.15625)
 texture = ExtResource("2_u3np5")
 hframes = 4
 vframes = 4
-frame = 5
 metadata/_aseprite_wizard_config_ = {
 "i_mode": -1,
 "keep_anim_length": false,
@@ -275,6 +278,23 @@ shape = SubResource("RectangleShape2D_ecsi6")
 [node name="Enemy_Target" type="Node2D" parent="."]
 position = Vector2(0, -32.5)
 scale = Vector2(0.2, 0.2)
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6yvir")
+bus = &"Sfx"
+
+[node name="IdleSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_onbje")
+volume_db = -19.925
+bus = &"Music"
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xanst")
+bus = &"Sfx"
+
+[node name="MoveSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_yikjy")
+bus = &"Sfx"
 
 [connection signal="timeout" from="TickTimer" to="." method="_on_tick_timer_timeout"]
 [connection signal="timeout" from="FloatTimer" to="." method="_on_float_timer_timeout"]

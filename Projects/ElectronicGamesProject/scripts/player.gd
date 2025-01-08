@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+class_name Player
+
+enum PlayerAbilities { NONE, GRAB }
+
 @onready var float_timer = $FloatTimer
 @onready var grab_area = $GrabArea
 @onready var tick_timer = $TickTimer
@@ -14,6 +18,11 @@ extends CharacterBody2D
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
 @onready var wall_area = $WallArea
+@onready var jump_sound = $JumpSound
+@onready var hurt_sound = $HurtSound
+@onready var move_sound = $MoveSound
+@onready var idle_sound = $IdleSound
+
 
 
 const SPEED = 200.0
@@ -47,6 +56,8 @@ var game_frozen = false
 var moveTo
 var was_on_floor = false
 var vulnerable = true
+var is_uncommon_projectile = false
+var projectile_scale = 1
 @export var MAXJUMPS = 1
 @export var MAXSLINGS = 1
 @export var MAXGRABS = 0
@@ -61,9 +72,19 @@ func _physics_process(delta):
 	
 	if(moveTo == null):
 		var direction = Input.get_axis("MoveLeft", "MoveRight") * int(vulnerable) * int(!motion)
+		if direction != 0 and !move_sound.playing and is_on_floor():
+			idle_sound.stop()
+			move_sound.play()
+		elif direction == 0 and !idle_sound.playing and is_on_floor():
+			move_sound.stop()
+			idle_sound.play()
+		elif !is_on_floor():
+			idle_sound.stop()
+			move_sound.stop()
 		if direction > 0:
 			#print(velocity.x)
 			#velocity.x = direction*SPEED
+			
 			accelerate(direction)
 			if(!is_wall_sticking):
 				animation_player.play("Stick")
@@ -144,6 +165,7 @@ func jump(delta):
 	if(!is_wall_sticking):
 		velocity.y += gravity * delta
 	if Input.is_action_just_pressed("Space") and (is_on_floor() or is_on_wall() or !coyote_timer.is_stopped()):
+		jump_sound.play()
 		release_enemy()
 		animation_player.play("Move")
 		#print("Jumped")
@@ -227,7 +249,7 @@ func sling():
 			#velocity = Input.get_last_mouse_velocity() * (-1)
 			#print(startCur.distance_to(get_global_mouse_position()))
 			curInput = false
-			
+			jump_sound.play()
 			float_timer.start()
 
 func createArrow():
@@ -298,7 +320,12 @@ func grab():
 				return
 			
 			if closest.name == "ProjectileGrab":
-				closest.get_parent().stop_collision()
+				var proj_parent = closest.get_parent()
+				proj_parent.stop_collision()
+				if proj_parent.has_method("get_type_of_projectile") and proj_parent.has_method("get_projectile_scale"):
+					is_uncommon_projectile = proj_parent.get_type_of_projectile()
+					projectile_scale = proj_parent.get_projectile_scale()
+					
 				#closest.get_parent().SPEED = 0
 			moveTo = closest
 			numOfGrabs -=1
@@ -328,12 +355,15 @@ func move_to_position(endPosition,delta):
 		stickToObject(endPosition)
 		moveTo = null
 		
-func catch_a_parasite(_parasite):
+func catch_a_parasite(parasite):
 	#Change depending on the parasite
 	health = clamp(health + 25,0,MAXHEALTH)
-	if (_parasite.parasiteAbility == null):
+	var ability: PlayerAbilities = PlayerAbilities.NONE
+	if(parasite.has_method("get_ability")):
+		ability = parasite.get_ability()
+	if (ability == PlayerAbilities.NONE):
 		return
-	if (_parasite.parasiteAbility == "Grab"):
+	if (ability == PlayerAbilities.GRAB):
 		MAXGRABS += 1
 
 func _on_tick_timer_timeout():
@@ -343,6 +373,7 @@ func _on_tick_timer_timeout():
 func take_damage(amount):
 	if(!vulnerable):
 		return
+	hurt_sound.play()
 	animation_player.play("Hurt")
 	health = clamp(health-amount,0,MAXHEALTH)
 	print("Took " + str(amount) + " damage and now i have " + str(health) + " health!")
@@ -383,6 +414,10 @@ func shoot(spawnPosition, spawnRotation, startingSpawnRotation, projectileCollis
 		projInstance.spawnRot = startingSpawnRotation
 		projInstance.zdex = z_index - 1
 		projInstance.coll = projectileCollision
+		projInstance.source_uncommon = is_uncommon_projectile
+		projInstance.scale_number = projectile_scale
+		projectile_scale = 1
+		is_uncommon_projectile = false
 		game.add_child.call_deferred(projInstance)
 
 func die():

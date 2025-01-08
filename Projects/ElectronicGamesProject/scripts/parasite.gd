@@ -1,6 +1,5 @@
 extends Node2D
 
-
 const BIGACC = 400
 const SMALLACC = 50
 const NEAR = 40
@@ -16,12 +15,13 @@ var engage = false
 var nearestNOC
 var playerClose = null
 var foundNOC = false
-var nocsParent
+@export var nocsParent : Node
+var _parasiteAbility: Player.PlayerAbilities
 var NOCSPARENTNAME = "Enemies"
 var nocNum = 0
 var isUnpoweredPar = false
 var isRemenantPar = false
-var parasiteAbility
+
 var healthRestore = 0
 var defaultAlpha = 1
 var alphaChange = 1
@@ -31,14 +31,18 @@ var invulnerableShine = 0
 var shineChange = 0.85
 var change = false
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	playerClose = game.get_node("Player")
 	material.set_shader_parameter("bright_amount",0)
 	#nocsParent = get_tree().get_root().get_node("Game").get_node(NOCSPARENTNAME)
 	#print(nocsParent.get_child_count())
 	#print(nocNum)
 	if isUnpoweredPar:
 		animation_player.play("Unpowered")
+		catch_zone.monitorable = false
+		catch_zone.monitoring = false
 		
 	if isRemenantPar:
 		animation_player.play("Remenant")
@@ -51,17 +55,21 @@ func _process(delta):
 	if isRemenantPar:
 		become_vulnerable(delta)
 	if(isUnpoweredPar):
+		become_vulnerable(delta)
 		return
 	#print(NOCSPARENT.get_child_count())
 	#if nocsParent.get_child_count() > 0:
 	#	move_to_position(nocsParent.get_child(nocNum),delta,SMALLACC)
 	shine(delta)
-	if(playerClose!= null):
-		check_close()
+	#if(playerClose!= null):
+		#check_close()
+	if(nocsParent != null):
+		nearestNOC = nocsParent.get_child(0)
+		engage = true
 	if(!engage):
 		#Make a spontanious movement
-		
-		position.x = position.x + SMALLACC*delta
+		return
+		#position.x = position.x + SMALLACC*delta
 		#position.y = position.y + 30*delta
 	else:
 		move_to_position(nearestNOC,delta,SMALLACC)
@@ -94,7 +102,7 @@ func check_close():
 
 func _on_search_zone_body_entered(body):
 	if(body.name ==  "Player"):
-		playerClose = body
+		#playerClose = body
 		print(body.name + " entered!")
 	
 
@@ -121,8 +129,9 @@ func move_to_position(endPosition,delta,acceleration):
 
 
 func _on_search_zone_body_exited(body):
+	return
 	if(body.name ==  "Player"):
-		playerClose = null
+		#playerClose = null
 		print(body.name + " exited!")
 		animation_player.play("Shrink")
 		
@@ -130,9 +139,13 @@ func _on_search_zone_body_exited(body):
 func become_unpowered():
 	print("Im unpowered")
 	isUnpoweredPar = true
-	parasiteAbility = "Grab"
 	
+	
+func assing_ability(ability: Player.PlayerAbilities):
+	_parasiteAbility = ability
 
+func get_ability():
+	return _parasiteAbility
 
 func _on_catch_zone_body_entered(body):
 	if(!isUnpoweredPar):

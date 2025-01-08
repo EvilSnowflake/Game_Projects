@@ -11,10 +11,12 @@ const friction = 5
 @export var SHOOTABILITY = false
 @export var MAXDISTANCE = 0
 @export var UNCOMMONENEMY = false
-@export var spawnOnDeath : Node2D
+@export var spawnOnDeath : Array[Node2D]
 @export var dashLength = 200
 @export var dashSpeed = 3
 @export var direction = -1
+@export var give_ability: Player.PlayerAbilities = Player.PlayerAbilities.NONE
+@export var health = 0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*0.75
 var parasiteInside
@@ -23,7 +25,6 @@ var player
 var player_target
 var beingGrabbed = false
 var attacking = false
-
 var startPositionX
 var startPositionY
 var shooting = false
@@ -38,10 +39,17 @@ var uncommon_word = "Uncommon"
 var anim_word = ""
 var fire_source
 
-
+@onready var uncommon_melee = $Uncommon_Melee
+@onready var uncommon_idle = $Uncommon_Idle
+@onready var uncommon_hurt = $Uncommon_Hurt
+@onready var ranged_idle = $Ranged_Idle
+@onready var ranged_hurt = $Ranged_Hurt
+@onready var melee_hurt = $Melee_Hurt
+@onready var melee_attack = $Melee_Attack
+@onready var melee_shakeout = $Melee_Shakeout
+@onready var melee_walk = $Melee_Walk
 @onready var noc_area = $NocArea
 @onready var attack_timer = $AttackTimer
-@export var health = 0
 @onready var game = get_tree().current_scene
 @onready var animation_player = $AnimationPlayer
 @onready var timer = $Timer
@@ -49,7 +57,6 @@ var fire_source
 @onready var noc_collision_shape = $NocCollisionShape
 @onready var projectile_node = $ProjectileNode
 @onready var uncommon_projectile_node = $UncommonProjectileNode
-
 @onready var grab = $Grab
 @onready var sprite_2d = $Sprite2D
 @onready var melee = $Melee
@@ -95,14 +102,18 @@ func _process(_delta):
 	else:
 		velocity.y = 0
 	fire_source.look_at(player_target.global_position)
-	if(UNCOMMONENEMY and !attacking):
-		position = position.move_toward(Vector2(startPositionX,startPositionY), UNCOMMONSPEEDVALUE * _delta)
-		return
-	if(UNCOMMONENEMY and dashing and (position.x < startPositionX+(MAXDISTANCE*direction))):
-		velocity = Vector2(direction*UNCOMMONSPEEDVALUE,0)
-	elif(UNCOMMONENEMY and (position.x >= startPositionX+(MAXDISTANCE*direction))):
-		velocity.x = 0
-		return
+	if UNCOMMONENEMY:
+		if !attacking:
+			position = position.move_toward(Vector2(startPositionX,startPositionY), UNCOMMONSPEEDVALUE * _delta)
+			if !uncommon_idle.playing:
+				uncommon_idle.play()
+			return
+		if(dashing and (position.x < startPositionX+(MAXDISTANCE*direction))):
+			velocity = Vector2(direction*UNCOMMONSPEEDVALUE,0)
+		elif(position.x >= startPositionX+(MAXDISTANCE*direction)):
+			velocity.x = 0
+			
+			return
 	move_and_slide()
 	add_friction()
 	if(UNCOMMONENEMY):
@@ -111,15 +122,20 @@ func _process(_delta):
 	if(becomeEnemy and !SHOOTABILITY):
 		if velocity.x == 0  and !dashing and !shaking:
 			animation_player.play(anim_word + "_Possesed_Idle")
+			melee_walk.stop()
+			
 		elif (velocity.x != 0 and !dashing):
 			animation_player.play(anim_word + "_Possesed_Move")
+			if !melee_walk.playing:
+				melee_walk.play()
+				
 		if (player.global_position.x >= startPositionX + MAXDISTANCE or player.global_position.x <= startPositionX - MAXDISTANCE) and !dashing:
 			chasing = false
 		else:
 			chasing = true
 		#velocity.x = direction*dashLength*dashSpeed
 		#print("The enemy is: " + str(position.x) + " and the player is: " +str(player.position.x))
-		var distP = position.distance_to(player.position)
+		var _distP = position.distance_to(player.position)
 		var distX = position.x - player.position.x
 		if abs(distX)<=VERYNEAR:
 			return
@@ -133,6 +149,10 @@ func _process(_delta):
 		if !dashing:
 			velocity = Vector2(direction*SPEEDVALUE,0)
 		#position = position.move_toward(Vector2(player.position.x,0), SPEED * _delta)
+	elif SHOOTABILITY:
+		if anim_word == ranged_word and !ranged_idle.playing:
+			ranged_idle.play()
+		
 	if position.x < player.position.x:
 		sprite_2d.flip_h = true
 		direction = 1
@@ -141,6 +161,7 @@ func _process(_delta):
 		sprite_2d.flip_h = false
 		#melee.rotation = -180
 		direction = -1
+	
 
 func add_friction():
 	velocity.x = move_toward(velocity.x, 0, friction)
@@ -191,23 +212,35 @@ func _on_timer_timeout():
 
 func take_damage(amount):
 	health = clamp(health - amount,0,MAXHEALTH)
-	print(health)
-	
+	#print(health)
+	if anim_word == melee_word and !UNCOMMONENEMY:
+		melee_walk.stop()
+		melee_hurt.play()
+	elif anim_word == ranged_word and !UNCOMMONENEMY:
+		ranged_idle.stop()
+		ranged_hurt.play()
+	elif UNCOMMONENEMY:
+		uncommon_idle.stop()
+		uncommon_hurt.play()
 	#if i am an uncommon enemy there should be a change at 50% health which makes me more dangerous
 	if( health <= MAXHEALTH/2 and UNCOMMONENEMY):
 		attack_timer.wait_time = 1
 	
-	if(health <= 0):
+	if(health <= 0 and becomeEnemy):
 		died = true
 		player.release_enemy()
 		#player.velocity = Vector2(0,-100)
 		attack_timer.stop()
 		print("I died!!")
+		var prevParent = self.get_parent()
+		self.call_deferred("reparent",game)
 		var exitedPar = PARASITE.instantiate()
 		#var remenantPar = PARASITE.instantiate()
 		
 		game.call_deferred("add_child",exitedPar)
 		exitedPar.position = Vector2(position.x,parasitePos.y - 50)
+		exitedPar.nocsParent = prevParent
+		
 		#exitedPar.reparent(game)
 		noc_area.set_deferred("monitoring",false)
 		noc_area.set_deferred("monitorable",false)
@@ -219,6 +252,9 @@ func take_damage(amount):
 		#grab.monitorable = false
 		animation_player.play("Dying")
 		
+		if(spawnOnDeath != null):
+			for spawn in spawnOnDeath:
+				spawn.enable_and_show_node()
 		if(!UNCOMMONENEMY):
 			var remenantPar = PARASITE.instantiate()
 			game.call_deferred("add_child",remenantPar)
@@ -228,9 +264,8 @@ func take_damage(amount):
 			remenantPar.become_remenant()
 			return
 		exitedPar.become_unpowered()
-		if(spawnOnDeath != null):
-			spawnOnDeath.enable_and_show_node()
-		
+		exitedPar.assing_ability(give_ability)
+		becomeEnemy = false
 		
 
 
@@ -267,14 +302,17 @@ func _on_attack_timer_timeout():
 		player.release_enemy()
 		toggle_shaking()
 		animation_player.play(anim_word + "_Possesed_ShakeOut")
-		
+		if anim_word == melee_word and !melee_shakeout.playing:
+			melee_walk.stop()
+			melee_shakeout.play()
 		return
-	
 	
 	if(UNCOMMONENEMY and shooting):
 		animation_player.play(anim_word+"_Possesed_Attack")
 		animation_player.queue(anim_word+"_Possesed_Idle")
 		shooting = false
+		uncommon_idle.stop()
+		#uncommon_melee.play()
 		return
 	elif (UNCOMMONENEMY and !shooting):
 		animation_player.play(anim_word + "_Possesed_Attack_Melee")
@@ -282,6 +320,8 @@ func _on_attack_timer_timeout():
 		attacking = true
 		#dashing = true
 		shooting = true
+		uncommon_idle.stop()
+		#uncommon_melee.play()
 		return
 		
 	if(SHOOTABILITY):
@@ -300,6 +340,8 @@ func _on_attack_timer_timeout():
 		animation_player.queue(anim_word+"_Possesed_Idle")
 		#velocity.y = -500
 		velocity.x = direction*dashLength
+		melee_walk.stop()
+		melee_attack.play()
 		
 		shooting = true
 		attack_timer.stop()
@@ -320,6 +362,7 @@ func shoot(projectileCollision):
 	projInstance.zdex = z_index - 1
 	projInstance.coll = projectileCollision
 	game.add_child.call_deferred(projInstance)
+	projInstance.source_uncommon = UNCOMMONENEMY 
 
 func get_grabbed(_body):
 	print("Got grabbed")

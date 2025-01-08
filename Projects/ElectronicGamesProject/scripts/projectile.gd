@@ -9,16 +9,23 @@ var spawnRot : float
 var zdex : int
 var beingGrabbed = false
 var coll = 1
+var source_uncommon : bool = false
+var scale_number : float = 1.0
 
 @onready var collision_shape = $CollisionShape
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
 	#print("I spawn with rotation : " + str(dir))
-	animation_player.play("Fired")
-	animation_player.queue("Aired")
+	if(!source_uncommon):
+		animation_player.play("Fired")
+		animation_player.queue("Aired")
+	else:
+		animation_player.play("Fired_Uncommon")
+		animation_player.queue("Aired_Uncommon")
 	global_position = spawnPos
 	global_rotation = spawnRot
+	scale = Vector2(scale_number,scale_number)
 	z_index = zdex
 	collision_shape.set_collision_layer_value(coll,true)
 	collision_shape.set_collision_mask_value(coll,true)
@@ -52,6 +59,11 @@ func set_direction(_rotationd):
 	#print("Setting rotation to : "+ str(rotationd))
 	dir = 180
 
+func get_type_of_projectile():
+	return source_uncommon
+
+func get_projectile_scale():
+	return scale_number
 
 func _on_collision_shape_area_shape_entered(_area_rid, area, _area_shape_index, _local_shape_index):
 	#print(" Hit area : " + area.name)

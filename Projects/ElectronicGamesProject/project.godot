@@ -15,6 +15,10 @@ run/main_scene="res://scenes/start_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://UniversalBusLayout.tres"
+
 [display]
 
 window/size/viewport_width=1280
@@ -75,6 +79,8 @@ Escape={
 2d_physics/layer_4="Grab"
 2d_physics/layer_5="EnemyCollision"
 2d_physics/layer_6="Environment"
+2d_physics/layer_7="Text_Layer"
+2d_physics/layer_8="WinLayer"
 
 [rendering]
 
