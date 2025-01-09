@@ -9,6 +9,9 @@ const NEAR = 40
 @onready var game = get_tree().get_root().get_node("Game")
 @onready var sprite_2d = $Sprite2D
 @onready var catch_zone = $CatchZone
+@onready var parasite_wander = $ParasiteWander
+@onready var parasite_enter = $ParasiteEnter
+@onready var parasite_exit = $ParasiteExit
 
 
 var engage = false
@@ -34,6 +37,7 @@ var change = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	parasite_exit.play()
 	playerClose = game.get_node("Player")
 	material.set_shader_parameter("bright_amount",0)
 	#nocsParent = get_tree().get_root().get_node("Game").get_node(NOCSPARENTNAME)
@@ -60,6 +64,8 @@ func _process(delta):
 	#print(NOCSPARENT.get_child_count())
 	#if nocsParent.get_child_count() > 0:
 	#	move_to_position(nocsParent.get_child(nocNum),delta,SMALLACC)
+	if !parasite_wander.playing:
+		parasite_wander.play()
 	shine(delta)
 	#if(playerClose!= null):
 		#check_close()
@@ -124,6 +130,7 @@ func move_to_position(endPosition,delta,acceleration):
 		position = position.move_toward(endPosition.position, acceleration*delta)
 	else:
 		nearestNOC.get_possesed(self,playerClose)
+		#parasite_enter.play()
 		animation_player.play("Shrink")
 		engage = false
 

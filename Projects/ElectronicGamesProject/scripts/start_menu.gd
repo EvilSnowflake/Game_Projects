@@ -2,6 +2,7 @@ extends Control
 
 @onready var start_button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/StartButton
 @onready var exit_button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ExitButton
+@onready var sound_button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundButton
 @onready var mesh_instance_2d = $CanvasLayer/MeshInstance2D
 @onready var button_sound_fx = $ButtonSoundFx
 @onready var windowMesh : QuadMesh = load("res://Meshes/WindowMesh.tres")
@@ -11,6 +12,7 @@ var _timer_finish = false
 
 #@onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/ExitButton as Button
 @export var startLevel = "res://scenes/game.tscn"
+@export var soundControlMenu : Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +21,7 @@ func _ready():
 	get_tree().get_root().size_changed.connect(resize)
 	start_button.button_down.connect(on_start_button_down)
 	exit_button.button_down.connect(on_exit_button_down)
+	sound_button.button_down.connect(on_sound_menu_button_down)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -47,3 +50,6 @@ func on_exit_button_down() -> void:
 	wait_timer.start()
 	await wait_timer.timeout
 	get_tree().quit()
+
+func on_sound_menu_button_down():
+	soundControlMenu.show()

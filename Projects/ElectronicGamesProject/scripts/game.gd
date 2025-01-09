@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var pause_menu = %PauseMenu
-@onready var mesh_instance_2d = $UserInterface/MeshInstance2D
+@onready var mesh_instance_2d = $UserInterface/MeshFilterEffect
 @onready var parallax_background = $ParallaxBackground
 
 var paused = false

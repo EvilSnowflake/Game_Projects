@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://dy7n82d6w31me"]
+[gd_scene load_steps=48 format=4 uid="uid://dy7n82d6w31me"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_iyb04"]
 [ext_resource type="Texture2D" uid="uid://j0g1wbyjlp67" path="res://assets/Tilemap.png" id="1_yclu0"]
@@ -22,6 +22,7 @@
 [ext_resource type="QuadMesh" uid="uid://c13006hkh21ew" path="res://Meshes/WindowMesh.tres" id="15_eq5ly"]
 [ext_resource type="Texture2D" uid="uid://cg5bgitwwcyip" path="res://assets/MovBack2_1.png" id="15_ya3vd"]
 [ext_resource type="Texture2D" uid="uid://cga8wxvv526t7" path="res://assets/MovBack2_2.png" id="18_egilw"]
+[ext_resource type="PackedScene" uid="uid://q4u1v18dcqsl" path="res://scenes/sound_control.tscn" id="18_l4mhd"]
 [ext_resource type="PackedScene" uid="uid://b3sdt6x7bg5w5" path="res://scenes/text_area.tscn" id="20_6ftjb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kq4gu"]
@@ -6554,7 +6555,6 @@ tile_set = SubResource("TileSet_8f27i")
 position = Vector2(-357, -9)
 collision_layer = 129
 collision_mask = 129
-MAXGRABS = 1
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, 57.5)
@@ -6647,12 +6647,17 @@ text = "0"
 [node name="HealthBoxes" type="Label" parent="UserInterface/EnergyPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PauseMenu" parent="UserInterface" instance=ExtResource("7_42x1c")]
+[node name="PauseMenu" parent="UserInterface" node_paths=PackedStringArray("soundControlMenu", "meshFilterEffect") instance=ExtResource("7_42x1c")]
 unique_name_in_owner = true
 visible = false
 scale = Vector2(1.002, 1)
+soundControlMenu = NodePath("../SoundControl")
+meshFilterEffect = NodePath("../MeshFilterEffect")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="UserInterface"]
+[node name="SoundControl" parent="UserInterface" instance=ExtResource("18_l4mhd")]
+visible = false
+
+[node name="MeshFilterEffect" type="MeshInstance2D" parent="UserInterface"]
 material = SubResource("ShaderMaterial_1rrn4")
 mesh = ExtResource("15_eq5ly")
 

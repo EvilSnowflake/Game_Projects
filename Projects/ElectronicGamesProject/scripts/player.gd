@@ -373,6 +373,8 @@ func _on_tick_timer_timeout():
 func take_damage(amount):
 	if(!vulnerable):
 		return
+	if game_frozen :
+		unfreeze_time()
 	hurt_sound.play()
 	animation_player.play("Hurt")
 	health = clamp(health-amount,0,MAXHEALTH)

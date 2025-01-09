@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bohh2uam3w2bf"]
+[gd_scene load_steps=10 format=3 uid="uid://bohh2uam3w2bf"]
 
 [ext_resource type="Theme" uid="uid://cw5g71jv31lkh" path="res://assets/themes/main_theme.tres" id="1_lr8s1"]
 [ext_resource type="Script" path="res://scripts/start_menu.gd" id="1_xgyep"]
 [ext_resource type="Texture2D" uid="uid://ce2hisig7ctr1" path="res://assets/StartScreen.png" id="3_0kluy"]
+[ext_resource type="PackedScene" uid="uid://q4u1v18dcqsl" path="res://scenes/sound_control.tscn" id="4_fw1gx"]
 [ext_resource type="Shader" path="res://shaders/screen_effect.gdshader" id="4_iksvj"]
 [ext_resource type="AudioStream" uid="uid://dujqtbjymmg0y" path="res://assets/Sounds/ButtonSound2.ogg" id="5_231gu"]
 [ext_resource type="AudioStream" uid="uid://dxlqwjvvjddx2" path="res://assets/Sounds/01a Opening (part 1).mp3" id="5_pndsi"]
@@ -18,7 +19,7 @@ subdivide_width = 1
 subdivide_depth = 1
 center_offset = Vector3(640, 360, 0)
 
-[node name="StartMenu" type="Control"]
+[node name="StartMenu" type="Control" node_paths=PackedStringArray("soundControlMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_lr8s1")
 script = ExtResource("1_xgyep")
+soundControlMenu = NodePath("SoundControl")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
@@ -93,10 +95,19 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Play
 "
 
+[node name="SoundButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Sound"
+
 [node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Quit"
+
+[node name="SoundControl" parent="." instance=ExtResource("4_fw1gx")]
+visible = false
+layout_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
