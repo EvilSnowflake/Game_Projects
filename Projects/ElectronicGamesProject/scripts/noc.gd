@@ -167,7 +167,7 @@ func add_friction():
 	velocity.x = move_toward(velocity.x, 0, friction)
 
 func _on_body_entered(body):
-	print(body.name)
+	#print(body.name)
 	if(body.name == "Player"):
 		take_damage(25)
 		body.velocity = -1 * body.velocity
@@ -175,21 +175,21 @@ func _on_body_entered(body):
 	#	body.stickToObject(self)
 
 func get_possesed(parasite, playerBody):
-	print("Started getting possesed by parasite!")
-	print(parasite)
+	#print("Started getting possesed by parasite!")
+	#print(parasite)
 	player = playerBody
-	print(player.global_position)
+	#print(player.global_position)
 	for i in range(player.get_child_count()):
 		if(player.get_child(i).name != "Enemy_Target"):
 			continue
 		else:
 			player_target = player.get_child(i)
-			print("There is a target")
+			#print("There is a target")
 			break
 	if player_target == null:
-		print("There is not")
+		#print("There is not")
 		player_target = player
-	print(player_target.global_position)
+	#print(player_target.global_position)
 	parasitePos = parasite.position
 	parasiteInside = parasite
 	posess_timer.start()
@@ -199,7 +199,7 @@ func get_possesed(parasite, playerBody):
 
 func _on_timer_timeout():
 	#self.reparent(game)
-	print("Make it unpowered")
+	#print("Make it unpowered")
 	var exitedPar = PARASITE.instantiate()
 	
 	game.add_child(exitedPar)
@@ -231,7 +231,7 @@ func take_damage(amount):
 		player.release_enemy()
 		#player.velocity = Vector2(0,-100)
 		attack_timer.stop()
-		print("I died!!")
+		#print("I died!!")
 		var prevParent = self.get_parent()
 		self.call_deferred("reparent",game)
 		var exitedPar = PARASITE.instantiate()
@@ -276,7 +276,7 @@ func _on_posess_timer_timeout():
 	grab.monitorable = true
 	becomeEnemy = true
 	#if !UNCOMMONENEMY:
-	print("Got possesed")
+	#print("Got possesed")
 	turn_enemy()
 	attack_timer.start()
 
@@ -288,7 +288,7 @@ func _on_attack_timer_timeout():
 	#depending on where the player is either throw projectile, attack directly or throw them off of yourself
 	#Or we can make 2 types of enemies, once the walk up top the player and do a close attack
 	#And ones that sit and throw projectiles
-	print("attack")
+	#print("attack")
 	#var startingRot = projectile_node.rotation
 	#projectile_node.rotation_degrees = projectile_node.rotation_degrees + 90
 	var distP = self.position.distance_to(player.position)
@@ -365,15 +365,15 @@ func shoot(projectileCollision):
 	projInstance.source_uncommon = UNCOMMONENEMY 
 
 func get_grabbed(_body):
-	print("Got grabbed")
+	#print("Got grabbed")
 	beingGrabbed = true
 
 func released():
-	print("Got released")
+	#print("Got released")
 	beingGrabbed = false
 
 func _on_noc_area_body_entered(body):
-	print(body.name)
+	#print(body.name)
 	take_damage(25)
 	#if(body.name == "Player"):
 	#	body.stickToObject(self)

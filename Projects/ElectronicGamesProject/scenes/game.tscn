@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://dy7n82d6w31me"]
+[gd_scene load_steps=47 format=4 uid="uid://dy7n82d6w31me"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_iyb04"]
 [ext_resource type="Texture2D" uid="uid://j0g1wbyjlp67" path="res://assets/Tilemap.png" id="1_yclu0"]
@@ -16,12 +16,12 @@
 [ext_resource type="Texture2D" uid="uid://cwwc4pq60gdon" path="res://assets/Metroid_Fusion_Doors.png" id="7_p4lvo"]
 [ext_resource type="PackedScene" uid="uid://dm04jekq3ljvg" path="res://scenes/moving_label.tscn" id="8_qvtx2"]
 [ext_resource type="Shader" path="res://shaders/parasite.gdshader" id="8_s12op"]
-[ext_resource type="Shader" path="res://shaders/screen_effect.gdshader" id="12_4yohf"]
 [ext_resource type="Texture2D" uid="uid://dt0t803tyh8w1" path="res://assets/MovBack1_2.png" id="14_bwuqw"]
 [ext_resource type="Texture2D" uid="uid://b1bpd65u265l" path="res://assets/MovBack1_1.png" id="14_s4lwd"]
-[ext_resource type="QuadMesh" uid="uid://c13006hkh21ew" path="res://Meshes/WindowMesh.tres" id="15_eq5ly"]
 [ext_resource type="Texture2D" uid="uid://cg5bgitwwcyip" path="res://assets/MovBack2_1.png" id="15_ya3vd"]
+[ext_resource type="PackedScene" uid="uid://c3u0xepcj8i8t" path="res://scenes/input_settings.tscn" id="17_5i2eo"]
 [ext_resource type="Texture2D" uid="uid://cga8wxvv526t7" path="res://assets/MovBack2_2.png" id="18_egilw"]
+[ext_resource type="PackedScene" uid="uid://mwgeli0lxc2q" path="res://scenes/mesh_filter_effect.tscn" id="18_h3q7s"]
 [ext_resource type="PackedScene" uid="uid://q4u1v18dcqsl" path="res://scenes/sound_control.tscn" id="18_l4mhd"]
 [ext_resource type="PackedScene" uid="uid://b3sdt6x7bg5w5" path="res://scenes/text_area.tscn" id="20_6ftjb"]
 
@@ -6266,11 +6266,6 @@ shader = ExtResource("8_s12op")
 shader_parameter/bright_amount = 0.0
 shader_parameter/alpha_amount = 0.5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1rrn4"]
-shader = ExtResource("12_4yohf")
-shader_parameter/vignette_multiplier = 1.0
-shader_parameter/scanline_num = 180.0
-
 [sub_resource type="Animation" id="Animation_myqid"]
 resource_name = "Dfault"
 tracks/0/type = "value"
@@ -6596,7 +6591,6 @@ MAXDISTANCE = 150
 position = Vector2(2081, -37)
 SHOOTABILITY = true
 MAXDISTANCE = 150
-give_ability = 1
 
 [node name="NOCUNCOMMON" parent="Enemies" node_paths=PackedStringArray("spawnOnDeath") instance=ExtResource("3_7n1jx")]
 position = Vector2(1910, -34)
@@ -6606,6 +6600,7 @@ MAXDISTANCE = 50
 UNCOMMONENEMY = true
 spawnOnDeath = [NodePath("../../EnvironmentalCannon"), NodePath("../../TextAreas/ctrls_text_grabbing")]
 direction = 1
+give_ability = 1
 
 [node name="EnvironmentalCannon" parent="." instance=ExtResource("5_npy0f")]
 z_index = 1
@@ -6647,19 +6642,23 @@ text = "0"
 [node name="HealthBoxes" type="Label" parent="UserInterface/EnergyPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PauseMenu" parent="UserInterface" node_paths=PackedStringArray("soundControlMenu", "meshFilterEffect") instance=ExtResource("7_42x1c")]
+[node name="PauseMenu" parent="UserInterface" node_paths=PackedStringArray("inputMenu", "soundControlMenu", "meshFilterEffect") instance=ExtResource("7_42x1c")]
 unique_name_in_owner = true
 visible = false
 scale = Vector2(1.002, 1)
-soundControlMenu = NodePath("../SoundControl")
-meshFilterEffect = NodePath("../MeshFilterEffect")
+inputMenu = NodePath("InputSettings")
+soundControlMenu = NodePath("SoundControl")
+meshFilterEffect = NodePath("")
 
-[node name="SoundControl" parent="UserInterface" instance=ExtResource("18_l4mhd")]
+[node name="SoundControl" parent="UserInterface/PauseMenu" instance=ExtResource("18_l4mhd")]
 visible = false
+layout_mode = 1
 
-[node name="MeshFilterEffect" type="MeshInstance2D" parent="UserInterface"]
-material = SubResource("ShaderMaterial_1rrn4")
-mesh = ExtResource("15_eq5ly")
+[node name="InputSettings" parent="UserInterface/PauseMenu" instance=ExtResource("17_5i2eo")]
+visible = false
+layout_mode = 1
+
+[node name="MeshFilterEffect" parent="UserInterface" instance=ExtResource("18_h3q7s")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -6727,7 +6726,7 @@ shape = SubResource("RectangleShape2D_mdccd")
 [node name="ctrls_text_purpose" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(-225.459, 15.9466)
 collision_layer = 0
-text_to_show = "Don't let the parasite infect any more people."
+text_to_show = "Chase the parasite"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_purpose"]
 position = Vector2(69.0314, 0)

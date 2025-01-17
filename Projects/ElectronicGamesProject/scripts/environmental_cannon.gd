@@ -23,7 +23,7 @@ func on_shoot_timer_timeout():
 	var startingRot = rotation
 	#var degrad = deg_to_rad(startingRot)
 	var degrad  = deg_to_rad(rotation_degrees - 90)
-	print("Cannon shot!")
+	#print("Cannon shot!")
 	#shoot(3)
 	
 func shoot( projectileCollision):

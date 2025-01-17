@@ -11,7 +11,7 @@ func _ready():
 		disable_and_hide_node()
 
 func _on_text_area_entered(area: Area2D):
-	print("Text Area Entered")
+	#print("Text Area Entered")
 	#area.emit_signal("text_changed",)
 	if text_to_show == null or show_type == null :
 		return

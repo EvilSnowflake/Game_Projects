@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bohh2uam3w2bf"]
+[gd_scene load_steps=11 format=3 uid="uid://bohh2uam3w2bf"]
 
 [ext_resource type="Theme" uid="uid://cw5g71jv31lkh" path="res://assets/themes/main_theme.tres" id="1_lr8s1"]
 [ext_resource type="Script" path="res://scripts/start_menu.gd" id="1_xgyep"]
 [ext_resource type="Texture2D" uid="uid://ce2hisig7ctr1" path="res://assets/StartScreen.png" id="3_0kluy"]
 [ext_resource type="PackedScene" uid="uid://q4u1v18dcqsl" path="res://scenes/sound_control.tscn" id="4_fw1gx"]
+[ext_resource type="PackedScene" uid="uid://mwgeli0lxc2q" path="res://scenes/mesh_filter_effect.tscn" id="4_iansf"]
 [ext_resource type="Shader" path="res://shaders/screen_effect.gdshader" id="4_iksvj"]
 [ext_resource type="AudioStream" uid="uid://dujqtbjymmg0y" path="res://assets/Sounds/ButtonSound2.ogg" id="5_231gu"]
 [ext_resource type="AudioStream" uid="uid://dxlqwjvvjddx2" path="res://assets/Sounds/01a Opening (part 1).mp3" id="5_pndsi"]
@@ -53,6 +54,8 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "62d2e1491ea49ae44fa785854e9c31dd"
 
+[node name="MeshFilterEffect" parent="." instance=ExtResource("4_iansf")]
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -74,12 +77,9 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
-text = "Plasma"
+text = "Catch a Parasite"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Seperator" type="Control" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -104,6 +104,34 @@ text = "Sound"
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Quit"
+
+[node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_lr8s1")
+theme_override_font_sizes/font_size = 15
+text = "Project made by:
+Panayiotis Vahilakis
+MPSP2305
+Sound and graphical ssets by:
+Nintendo
+Assets ripped from original game by:"
+horizontal_alignment = 1
+
+[node name="Names1" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_lr8s1")
+theme_override_font_sizes/font_size = 10
+text = "THE SPRITERS RECOURCE -- Greiga Master, Katuko, 
+Lexou, Tails, psychtaygar, AutumnMood, 
+JigglyPuffGirl, Silent Sniper, Ngamer01"
+horizontal_alignment = 1
+
+[node name="Names2" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_lr8s1")
+theme_override_font_sizes/font_size = 15
+text = "THE SOUNDS RECOURCE -- Unknowni123"
+horizontal_alignment = 1
 
 [node name="SoundControl" parent="." instance=ExtResource("4_fw1gx")]
 visible = false

@@ -7,7 +7,7 @@ func _on_body_entered(body):
 	if body.name == "Player":
 		if !body.check_invulnerability():
 			return
-		print("Hit player")
+		#print("Hit player")
 		body.take_damage(damage)
 		set_deferred("monitoring",false)
 		set_deferred("monitorable",false)
@@ -19,8 +19,8 @@ func _on_body_entered(body):
 func enable_attacking():
 	monitoring = true
 	monitorable = true
-	print("I am enabled!")
+	#print("I am enabled!")
 func disable_attacking():
 	monitoring = false
 	monitorable = false
-	print("I am disabled!")
+	#print("I am disabled!")

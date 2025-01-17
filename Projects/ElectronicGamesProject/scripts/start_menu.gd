@@ -28,7 +28,7 @@ func _process(_delta):
 	pass
 
 func resize():
-	print(get_viewport().size)
+	#print(get_viewport().size)
 	var vp_size = get_viewport().size
 	windowMesh.size = vp_size
 	windowMesh.center_offset.x = vp_size.x / 2

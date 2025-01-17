@@ -6,8 +6,11 @@ extends Control
 @onready var resume = $MarginContainer/HBoxContainer/VBoxContainer/Resume
 @onready var sound_menu = $MarginContainer/HBoxContainer/VBoxContainer/SoundMenu
 @onready var check_button = $MarginContainer/HBoxContainer/CheckButton
+@onready var input_menu_button = $MarginContainer/HBoxContainer/VBoxContainer/InputMenu
+
 
 @export var menuLevel = "res://scenes/start_menu.tscn"
+@export var inputMenu : Control
 @export var soundControlMenu : Control
 @export var meshFilterEffect : MeshInstance2D
 
@@ -18,6 +21,7 @@ func _ready():
 	quit.button_down.connect(on_quit_button_down)
 	sound_menu.button_down.connect(on_sound_menu_button_down)
 	check_button.toggled.connect(on_check_button_toggled)
+	input_menu_button.button_down.connect(on_input_menu_button_down)
 
 func on_main_menu_button_down():
 	game.pauseMenu()
@@ -31,6 +35,9 @@ func on_quit_button_down():
 
 func on_sound_menu_button_down():
 	soundControlMenu.show()
+
+func on_input_menu_button_down():
+	inputMenu.show()
 
 func on_check_button_toggled(toggled_on: bool):
 	if meshFilterEffect.visible:

@@ -100,16 +100,17 @@ func check_close():
 		
 	if(closest):
 		foundNOC = true
-		print(closest.position)
+		#print(closest.position)
 		
 		nearestNOC = closest
 		engage = true
 		#Get into the NOC and make it an enemy	
 
 func _on_search_zone_body_entered(body):
-	if(body.name ==  "Player"):
+	pass
+	#if(body.name ==  "Player"):
 		#playerClose = body
-		print(body.name + " entered!")
+		#print(body.name + " entered!")
 	
 
 
@@ -139,12 +140,12 @@ func _on_search_zone_body_exited(body):
 	return
 	if(body.name ==  "Player"):
 		#playerClose = null
-		print(body.name + " exited!")
+		#print(body.name + " exited!")
 		animation_player.play("Shrink")
 		
 
 func become_unpowered():
-	print("Im unpowered")
+	#print("Im unpowered")
 	isUnpoweredPar = true
 	
 	
@@ -156,7 +157,7 @@ func get_ability():
 
 func _on_catch_zone_body_entered(body):
 	if(!isUnpoweredPar):
-		print("Still Empowered")
+		#print("Still Empowered")
 		return
 	if(body.name ==  "Player"):
 		body.get_healed(35)
@@ -165,7 +166,7 @@ func _on_catch_zone_body_entered(body):
 
 func become_remenant():
 	isRemenantPar = true
-	print("I am remenant")
+	#print("I am remenant")
 
 #Appreing Fucntion
 #This is when a parasite appears after being defeated and it needs 0.5seconds

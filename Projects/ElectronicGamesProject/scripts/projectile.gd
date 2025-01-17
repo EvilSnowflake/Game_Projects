@@ -76,9 +76,10 @@ func set_collision(number):
 	collision_shape.set_collision_mask_value(number,true)
 
 func _on_self_destruct_timer_timeout():
-	print("Destoy proecjtile")
+	#print("Destoy proecjtile")
 	queue_free()
 
 
 func _on_debug_timer_timeout():
-	print("The dir i have is: " + str(dir) + ", then the rotation i have is: " + str(rotation_degrees) + ", then the global rotation i have is: " + str(global_rotation) )
+	pass
+	#print("The dir i have is: " + str(dir) + ", then the rotation i have is: " + str(rotation_degrees) + ", then the global rotation i have is: " + str(global_rotation) )

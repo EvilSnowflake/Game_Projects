@@ -72,6 +72,10 @@ text = "Main Menu"
 layout_mode = 2
 text = "Sound Menu"
 
+[node name="InputMenu" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Input"
+
 [node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"

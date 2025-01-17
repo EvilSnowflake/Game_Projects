@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://mwgeli0lxc2q"]
+
+[ext_resource type="Shader" path="res://shaders/screen_effect.gdshader" id="1_gf5su"]
+[ext_resource type="QuadMesh" uid="uid://c13006hkh21ew" path="res://Meshes/WindowMesh.tres" id="2_k6b8i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1rrn4"]
+shader = ExtResource("1_gf5su")
+shader_parameter/vignette_multiplier = 1.0
+shader_parameter/scanline_num = 180.0
+
+[node name="MeshFilterEffect" type="MeshInstance2D"]
+material = SubResource("ShaderMaterial_1rrn4")
+mesh = ExtResource("2_k6b8i")

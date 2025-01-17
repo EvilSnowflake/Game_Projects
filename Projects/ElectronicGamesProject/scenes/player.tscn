@@ -286,7 +286,7 @@ bus = &"Sfx"
 [node name="IdleSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_onbje")
 volume_db = -19.925
-bus = &"Music"
+bus = &"Sfx"
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_xanst")

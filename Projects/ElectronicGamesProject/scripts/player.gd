@@ -226,7 +226,7 @@ func sling():
 			motion = true
 			velocity.x = 0
 			startCur = get_global_mouse_position()
-			print(get_global_mouse_position())
+			#print(get_global_mouse_position())
 			
 		elif Input.is_action_just_released("MouseLeftClick") and curInput:
 			#if(objectSticked):
@@ -378,29 +378,29 @@ func take_damage(amount):
 	hurt_sound.play()
 	animation_player.play("Hurt")
 	health = clamp(health-amount,0,MAXHEALTH)
-	print("Took " + str(amount) + " damage and now i have " + str(health) + " health!")
+	#print("Took " + str(amount) + " damage and now i have " + str(health) + " health!")
 	if(health == 0):
 		die()
 	vulnerable = false
 	is_wall_sticking = false
 	invulnerability_timer.start()
 	health_label.text = str(health)
-	print("start invulnerability")
+	#print("start invulnerability")
 
 func get_healed(amount):
 	health += amount
 	health_label.text = str(health)
-	print("Healed " + str(amount) + " damage and now i have " + str(health) + " health!")
+	#print("Healed " + str(amount) + " damage and now i have " + str(health) + " health!")
 
 func release_enemy():
 	if(objectSticked != null):
 		objectSticked.get_parent().released() 
-		print(objectSticked.name)
+		#print(objectSticked.name)
 	objectSticked = null
 
 
 func _on_invulnerability_timer_timeout():
-	print("stop invulnerability")
+	#print("stop invulnerability")
 	vulnerable = true
 
 func check_invulnerability():
@@ -423,7 +423,7 @@ func shoot(spawnPosition, spawnRotation, startingSpawnRotation, projectileCollis
 		game.add_child.call_deferred(projInstance)
 
 func die():
-	print("You died!")
+	#print("You died!")
 	Engine.time_scale = 0.5
 	get_node("CollisionShape2D").queue_free()
 	die_timer.start()

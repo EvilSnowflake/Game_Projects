@@ -3,6 +3,8 @@ extends Node2D
 @onready var pause_menu = %PauseMenu
 @onready var mesh_instance_2d = $UserInterface/MeshFilterEffect
 @onready var parallax_background = $ParallaxBackground
+@onready var _MUSIC_BUS_ID = AudioServer.get_bus_index("Music")
+@onready var _SFX_BUS_ID = AudioServer.get_bus_index("Sfx")
 
 var paused = false
 var gameFrozen = false
@@ -20,7 +22,7 @@ func _ready():
 	get_tree().get_root().size_changed.connect(resize)
 	for trans_area in transition_areas:
 		var areaNum = trans_area.name.substr(trans_area.name.length()-1,1).to_int()
-		print(areaNum)
+		#print(areaNum)
 		trans_area.body_entered.connect(_on_body_enter_transition_area.bind(areaNum))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,7 +33,7 @@ func _process(_delta):
 		pauseMenu()
 
 func resize():
-	print(get_viewport().size)
+	#print(get_viewport().size)
 	var vp_size = get_viewport().size
 	windowMesh.size = vp_size
 	windowMesh.center_offset.x = vp_size.x / 2
@@ -54,5 +56,10 @@ func pauseMenu():
 		Engine.time_scale = 1
 	else:
 		pause_menu.show()
+		for i in range (pause_menu.get_child_count()):
+			if i > 1:
+				pause_menu.get_child(i).hide()
 		Engine.time_scale = 0
+	
 	paused = !paused
+	AudioServer.set_bus_mute(_SFX_BUS_ID, paused)
