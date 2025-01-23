@@ -39,7 +39,7 @@ func on_sound_menu_button_down():
 func on_input_menu_button_down():
 	inputMenu.show()
 
-func on_check_button_toggled(toggled_on: bool):
+func on_check_button_toggled(_toggled_on: bool):
 	if meshFilterEffect.visible:
 		meshFilterEffect.hide()
 	else:

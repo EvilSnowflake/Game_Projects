@@ -106,16 +106,8 @@ func check_close():
 		engage = true
 		#Get into the NOC and make it an enemy	
 
-func _on_search_zone_body_entered(body):
-	pass
-	#if(body.name ==  "Player"):
-		#playerClose = body
-		#print(body.name + " entered!")
-	
-
-
 func find_closest(arr):
-	var clos
+	var clos = null
 	for body in arr:
 		if (!clos and body.name.begins_with("NOC")):
 			clos = body
@@ -126,23 +118,12 @@ func find_closest(arr):
 	return clos
 	
 func move_to_position(endPosition,delta,acceleration):
-	if(abs(position.x - endPosition.position.x) > NEAR):
-		#position.x = move_toward(position.x,endPosition.position.x,BIGACC*delta)
-		position = position.move_toward(endPosition.position, acceleration*delta)
-	else:
+	position = position.move_toward(endPosition.position, acceleration*delta)
+	if(abs(position.x - endPosition.position.x) <= NEAR):
 		nearestNOC.get_possesed(self,playerClose)
 		#parasite_enter.play()
 		animation_player.play("Shrink")
 		engage = false
-
-
-func _on_search_zone_body_exited(body):
-	return
-	if(body.name ==  "Player"):
-		#playerClose = null
-		#print(body.name + " exited!")
-		animation_player.play("Shrink")
-		
 
 func become_unpowered():
 	#print("Im unpowered")

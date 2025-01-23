@@ -46,12 +46,12 @@ alignment = 1
 [node name="MusicLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_k2ygh")
-text = "Background Music: "
+text = "BGM"
 
 [node name="SFXLabel2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_k2ygh")
-text = "Background Music: "
+text = "BGSFX"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -79,4 +79,4 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_k2ygh")
-text = "RETURN"
+text = "BACK"

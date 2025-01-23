@@ -56,9 +56,9 @@ layout_mode = 2
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_x0am3")
-text = "reset to default"
+text = "DEFAULT"
 
 [node name="BackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_x0am3")
-text = "back"
+text = "BACK"

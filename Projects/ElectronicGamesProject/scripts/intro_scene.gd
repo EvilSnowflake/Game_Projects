@@ -12,15 +12,16 @@ var texts_number: int = 0
 @export var menuLevel = "res://scenes/start_menu.tscn"
 
 func _ready():
+	#TranslationServer.set_locale("el")
 	char_timer.timeout.connect(_chartimer_timeout)
 	for child: Label in v_box_container.get_children():
-		texts_to_show.append(child.text)
+		texts_to_show.append(tr(child.text))
 		texts_number += 1
 	audio_stream_player.finished.connect(_audioplayer_finished)
 
-func _process(delta):
+func _process(_delta):
 	for i in range(texts_number):
-		var speedPerc: float = (_char_count*(100 - (10*i)))/100
+		var speedPerc: float = float(_char_count*(100 - (10*i)))/100.0
 		v_box_container.get_child(i).text = "%s" % texts_to_show[i].substr(0,int(speedPerc))
 		#print(speedPerc)
 	

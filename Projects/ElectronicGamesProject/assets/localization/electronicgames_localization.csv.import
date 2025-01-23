@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://defeswmv4d2bq"
+
+[deps]
+
+files=["res://assets/localization/electronicgames_localization.en.translation", "res://assets/localization/electronicgames_localization.el.translation"]
+
+source_file="res://assets/localization/electronicgames_localization.csv"
+dest_files=["res://assets/localization/electronicgames_localization.en.translation", "res://assets/localization/electronicgames_localization.el.translation"]
+
+[params]
+
+compress=true
+delimiter=1

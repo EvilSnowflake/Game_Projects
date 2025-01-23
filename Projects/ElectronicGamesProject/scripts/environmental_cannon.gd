@@ -20,9 +20,8 @@ func _ready():
 func on_shoot_timer_timeout():
 	animation_player.play("Fire")
 	animation_player.queue("Idle")
-	var startingRot = rotation
-	#var degrad = deg_to_rad(startingRot)
-	var degrad  = deg_to_rad(rotation_degrees - 90)
+	#var startingRot = rotation
+	#var degrad  = deg_to_rad(rotation_degrees - 90)
 	#print("Cannon shot!")
 	#shoot(3)
 	

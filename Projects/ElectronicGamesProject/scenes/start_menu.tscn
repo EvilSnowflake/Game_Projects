@@ -54,8 +54,6 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "62d2e1491ea49ae44fa785854e9c31dd"
 
-[node name="MeshFilterEffect" parent="." instance=ExtResource("4_iansf")]
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -77,7 +75,7 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
-text = "Catch a Parasite"
+text = "TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -92,29 +90,23 @@ theme_override_constants/separation = 30
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Play
-"
+text = "PLAY"
 
 [node name="SoundButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Sound"
+text = "SOUND"
 
 [node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Quit"
+text = "QUIT"
 
 [node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_lr8s1")
 theme_override_font_sizes/font_size = 15
-text = "Project made by:
-Panayiotis Vahilakis
-MPSP2305
-Sound and graphical ssets by:
-Nintendo
-Assets ripped from original game by:"
+text = "SUBTITLE"
 horizontal_alignment = 1
 
 [node name="Names1" type="Label" parent="MarginContainer/VBoxContainer"]
@@ -143,6 +135,8 @@ visible = false
 [node name="MeshInstance2D" type="MeshInstance2D" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_fxy0y")
 mesh = SubResource("QuadMesh_bpjj3")
+
+[node name="MeshFilterEffect" parent="." instance=ExtResource("4_iansf")]
 
 [node name="ButtonSoundFx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_231gu")

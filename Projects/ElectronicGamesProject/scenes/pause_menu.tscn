@@ -61,26 +61,25 @@ layout_mode = 2
 
 [node name="Resume" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Resume
-"
+text = "RESUME"
 
 [node name="MainMenu" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Main Menu"
+text = "MNMENU"
 
 [node name="SoundMenu" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Sound Menu"
+text = "SOUND"
 
 [node name="InputMenu" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Input"
+text = "INPUT"
 
 [node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Quit"
+text = "QUIT"
 
 [node name="CheckButton" type="CheckButton" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 button_pressed = true
-text = "Filter Effect"
+text = "FLTR"

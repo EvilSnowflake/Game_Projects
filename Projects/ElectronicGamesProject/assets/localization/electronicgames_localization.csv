@@ -1,0 +1,40 @@
+﻿keys;en;el
+INTRO1;"GAME AND VIRTUAL REALITY 
+APPLICATION DEVELOPMENT";"ΑΝΑΠΤΥΞΗ ΠΑΙΧΝΙΔΙΩΝ ΚΑΙ ΕΦΑΡΜΟΓΩΝ 
+ΕΙΚΟΝΙΚΗΣ ΠΡΑΓΜΑΤΙΚΟΤΗΤΑΣ"
+INTRO2;"Assignment created by
+Panayiotis Vahilakis MPSP2305";"Η εργασία υλοποιήθηκε από τον
+Παναγιώτης Βαϊλάκης ΜΠΣΠ2305"
+INTRO3;"Made with:
+Godot Game Engine";"Φτιάχτηκε με:
+Godot Μηχανή Παιχνιδιών"
+TITLE;Catch a Parasite;Πίασε το παράσιτο
+SUBTITLE;"Project made by:
+Panayiotis Vahilakis
+MPSP2305
+Sound and graphical assets by:
+Nintendo
+Assets ripped from original game by:";"Η εργασία υλοποιήθηκε από τον
+Παναγιώτης Βαϊλάκης ΜΠΣΠ2305
+Ήχοι και γραφικά στοιχεία από:
+Nintendo
+Τα στοιχεία τα αντέγραψαν από το πρωτότυπο παιχνίδι οι:"
+PLAY;Play;Παίξε
+SOUND;Sound;Ήχοι
+QUIT;Quit;Έξοδος
+ENERGY;Energy ;Ενέργεια 
+RESUME;Resume;Συνέχισε
+MNMENU;Main Menu;Κύριο Μενού
+FLTR;Filter Effect;Εφέ Φίλτρου
+INPUT;Input;Κουμπιά
+WLCM;Welcome to the game. Move the character by pressing A/S.;Καλώς ήρθες στο παιχνίδι. Μετακίνησε τον χαρακτήρα πατώντας τα κουμπιά A/S.
+CTRLMOVE;Try to chase the yellow parasite;Προσάθησε να ακολουθήσεις το κίτρινο παράσιτο
+CTRLATTACK;Attack enemies by dragging the mouse towards them while pressing Left Click;Επιθέσου στους εχθρούς τραβώντας το ποντίκι σου προς την κατεύθυνση τους ενώ πατάς το Αριστερό Κουμπί του ποντικιού
+CTRLPRPS;Chase the parasite;Καταδίωξε το παράσιτο
+CTRLREM;Blue parasites are unpowered and can be caught to heal you.;Τα μπλέ παράσιτα είναι αδύναμα και μπορείς να τα απορροφήσεις για να θεραπευτείς
+CTRLGRAB;You have earned the ability to grab enemies and projectiles. While close to them press Right Click to stick to them and drag your mouse while holding Left Click to launch yourself to that direction.;Απέκτησες την ικανότητα να πιάνεσε σε εχθρούς και βλήματα. Όσο είσαι κοντά τους πάτα το Δεξί Κουμπί του ποντικιού ώστε να κολλήσεις σε αυτούς και τράβα το ποντίκι σου ενώ πατάς το Δεξί Κουμπί του ποντικιού για να εκτοξευθείς σε αυτήν την κατεύθυνση.
+CTRLEND;The parasite has perished, you can return to the main menu to replay the level by entering the door.;Το παράσιτο απεβίωσε, τώρα μπορείς να επιστρέψεις στο κύριο μενού για να επαναλάβεις το επίπεδο εισέρχοντας την ακόλουθη πόρτα.
+BGM;Background Music: ;Μουσική Παρασκηνίου: 
+BGSFX;Background SFX: ;Ηχητικά Εφέ Παρασκηνίου: 
+BACK;Return;Επιστροφή
+DEFAULT;Reset to default;Επαναφορά στις προεπιλογές

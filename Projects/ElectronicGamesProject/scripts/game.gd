@@ -3,7 +3,7 @@ extends Node2D
 @onready var pause_menu = %PauseMenu
 @onready var mesh_instance_2d = $UserInterface/MeshFilterEffect
 @onready var parallax_background = $ParallaxBackground
-@onready var _MUSIC_BUS_ID = AudioServer.get_bus_index("Music")
+#@onready var _MUSIC_BUS_ID = AudioServer.get_bus_index("Music")
 @onready var _SFX_BUS_ID = AudioServer.get_bus_index("Sfx")
 
 var paused = false

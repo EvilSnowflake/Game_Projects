@@ -182,7 +182,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_hqpcc"]
 resource_name = "Shrink"
-length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -190,7 +189,7 @@ tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(0.01, 0.01)]
@@ -202,7 +201,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -373,6 +372,4 @@ volume_db = 10.0
 max_distance = 500.0
 bus = &"Sfx"
 
-[connection signal="body_entered" from="SearchZone" to="." method="_on_search_zone_body_entered"]
-[connection signal="body_exited" from="SearchZone" to="." method="_on_search_zone_body_exited"]
 [connection signal="body_entered" from="CatchZone" to="." method="_on_catch_zone_body_entered"]

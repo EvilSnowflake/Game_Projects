@@ -8,8 +8,6 @@ extends Control
 @onready var windowMesh : QuadMesh = load("res://Meshes/WindowMesh.tres")
 @onready var wait_timer = $WaitTimer
 
-var _timer_finish = false
-
 #@onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/ExitButton as Button
 @export var startLevel = "res://scenes/game.tscn"
 @export var soundControlMenu : Control

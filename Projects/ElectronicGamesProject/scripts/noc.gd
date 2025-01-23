@@ -118,7 +118,7 @@ func _process(_delta):
 	add_friction()
 	if(UNCOMMONENEMY):
 		return
-	
+	#print(str(dashing) + " " + str(chasing) + " " + str(attacking))
 	if(becomeEnemy and !SHOOTABILITY):
 		if velocity.x == 0  and !dashing and !shaking:
 			animation_player.play(anim_word + "_Possesed_Idle")
@@ -223,7 +223,7 @@ func take_damage(amount):
 		uncommon_idle.stop()
 		uncommon_hurt.play()
 	#if i am an uncommon enemy there should be a change at 50% health which makes me more dangerous
-	if( health <= MAXHEALTH/2 and UNCOMMONENEMY):
+	if( health <= float(MAXHEALTH)/2.0 and UNCOMMONENEMY):
 		attack_timer.wait_time = 1
 	
 	if(health <= 0 and becomeEnemy):

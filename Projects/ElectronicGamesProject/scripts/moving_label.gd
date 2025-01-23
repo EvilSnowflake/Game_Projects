@@ -28,7 +28,7 @@ func _ready():
 	text_change_timer.timeout.connect(_on_text_timer_timeout)
 	fade_timer.timeout.connect(_on_fade_timer_timeout)
 	
-func _process(delta):
+func _process(_delta):
 	_text_var.text = "%s" % _text.substr(0,_char_count)
 	
 	if not(_texts.is_empty()) and not(_showing_text):
@@ -64,7 +64,7 @@ func _on_fade_timer_timeout():
 func set_text(new_text: String, how_to_show: ShowTextType):
 	
 	#_text = new_text
-	_texts.append(new_text)
+	_texts.append(tr(new_text))
 	#_type = how_to_show
 	_types.append(how_to_show)
 	

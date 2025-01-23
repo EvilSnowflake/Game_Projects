@@ -25,7 +25,7 @@ enum PlayerAbilities { NONE, GRAB }
 
 
 
-const SPEED = 200.0
+const SPEED = 150.0
 const JUMP_VELOCITY = -200.0
 const acc = 20
 const friction = 50
@@ -337,7 +337,7 @@ func grab():
 
 
 func find_closest(arr):
-	var clos
+	var clos = null
 	#print(arr)
 	for areas in arr:
 		if (!clos):
@@ -426,6 +426,8 @@ func die():
 	#print("You died!")
 	Engine.time_scale = 0.5
 	get_node("CollisionShape2D").queue_free()
+	#var camera = get_child(-1)
+	#camera.reparent.call_deferred(game)
 	die_timer.start()
 	
 func on_dietimer_timeout():

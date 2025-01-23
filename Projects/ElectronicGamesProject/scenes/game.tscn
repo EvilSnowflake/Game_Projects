@@ -6551,12 +6551,6 @@ position = Vector2(-357, -9)
 collision_layer = 129
 collision_mask = 129
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, 57.5)
-offset = Vector2(0, -39.105)
-zoom = Vector2(3, 3)
-position_smoothing_enabled = true
-
 [node name="RoomLabels" type="Node2D" parent="Player"]
 z_index = -6
 position = Vector2(12.5, -227.5)
@@ -6564,6 +6558,13 @@ scale = Vector2(2.5, 2.5)
 
 [node name="moving_label" parent="Player/RoomLabels" instance=ExtResource("8_qvtx2")]
 position = Vector2(-2, 15)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, 57.5)
+offset = Vector2(0, -39.105)
+zoom = Vector2(3, 3)
+limit_bottom = 170
+position_smoothing_enabled = true
 
 [node name="Parasite" parent="." node_paths=PackedStringArray("nocsParent") instance=ExtResource("4_764mx")]
 z_index = 3
@@ -6632,7 +6633,7 @@ alignment = 1
 
 [node name="EnergyLabel" type="Label" parent="UserInterface/EnergyPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Energy "
+text = "ENERGY"
 
 [node name="HealthLabel" type="Label" parent="UserInterface/EnergyPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -6648,7 +6649,7 @@ visible = false
 scale = Vector2(1.002, 1)
 inputMenu = NodePath("InputSettings")
 soundControlMenu = NodePath("SoundControl")
-meshFilterEffect = NodePath("")
+meshFilterEffect = NodePath("../MeshFilterEffect")
 
 [node name="SoundControl" parent="UserInterface/PauseMenu" instance=ExtResource("18_l4mhd")]
 visible = false
@@ -6699,7 +6700,7 @@ scale = Vector2(0.297171, 7.3997)
 [node name="welcome_text" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(-1716.18, 16.0817)
 collision_layer = 0
-text_to_show = "Welcome to the Game. Move the character by pressing A/S."
+text_to_show = "WLCM"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/welcome_text"]
 position = Vector2(34.9464, 0)
@@ -6708,7 +6709,7 @@ shape = SubResource("RectangleShape2D_mdccd")
 [node name="ctrls_text_moving" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(-1453.71, 16.0817)
 collision_layer = 0
-text_to_show = "Try to chase the yellow parasite"
+text_to_show = "CTRLMOVE"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_moving"]
 position = Vector2(69.0314, 0)
@@ -6717,7 +6718,7 @@ shape = SubResource("RectangleShape2D_mdccd")
 [node name="ctrls_text_attacking" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(-1022.98, 16.0817)
 collision_layer = 0
-text_to_show = "Attack enemies by dragging the mouse towards them while pressing Left Click"
+text_to_show = "CTRLATTACK"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_attacking"]
 position = Vector2(69.0314, 0)
@@ -6726,7 +6727,7 @@ shape = SubResource("RectangleShape2D_mdccd")
 [node name="ctrls_text_purpose" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(-225.459, 15.9466)
 collision_layer = 0
-text_to_show = "Chase the parasite"
+text_to_show = "CTRLPRPS"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_purpose"]
 position = Vector2(69.0314, 0)
@@ -6735,7 +6736,7 @@ shape = SubResource("RectangleShape2D_mdccd")
 [node name="ctrls_text_remenants" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(-545.141, 17.8386)
 collision_layer = 0
-text_to_show = "Blue parasites are unpowered and can be caught to heal you."
+text_to_show = "CTRLREM"
 is_hidden = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_remenants"]
@@ -6745,7 +6746,7 @@ shape = SubResource("RectangleShape2D_s2daa")
 [node name="ctrls_text_grabbing" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(6420.55, 10.1355)
 collision_layer = 0
-text_to_show = "You have earned the ability to grab enemies and projectiles. While close to them press Right Click to stick to them and drag your mouse while holding Left Click to launch yourself to that direction."
+text_to_show = "CTRLGRAB"
 is_hidden = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_grabbing"]
@@ -6755,7 +6756,7 @@ shape = SubResource("RectangleShape2D_s2daa")
 [node name="ctrls_text_end" parent="TextAreas" instance=ExtResource("20_6ftjb")]
 position = Vector2(7080.1, -41.8936)
 collision_layer = 0
-text_to_show = "The parasite has perished, you can return to the main menu to replay the level by entering the door."
+text_to_show = "CTRLEND"
 enable_finish_button = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextAreas/ctrls_text_end"]
